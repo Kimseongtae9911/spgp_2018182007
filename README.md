@@ -43,6 +43,8 @@
 
 # 발표 영상 링크 
 
+https://youtu.be/JYg99dAH_0U
+
 # 이미지 출처
 https://blog.naver.com/sonny123123/222903131171
 
