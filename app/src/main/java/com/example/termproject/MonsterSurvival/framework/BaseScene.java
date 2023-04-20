@@ -1,4 +1,4 @@
-package com.example.termproject.framework;
+package com.example.termproject.MonsterSurvival.framework;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -6,6 +6,8 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.view.MotionEvent;
+
+import com.example.termproject.MonsterSurvival.BuildConfig;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.example.termproject.framework;
+package com.example.termproject.MonsterSurvival.framework;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.view.Choreographer;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.example.termproject.MonsterSurvival.BuildConfig;
 
 /**
  * TODO: document your custom view class.
@@ -33,6 +35,10 @@ public class GameView extends View implements Choreographer.FrameCallback {
     public GameView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(attrs, defStyle);
+    }
+
+    public void setFullScreen() {
+        setSystemUiVisibility(View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
 
     private void init(AttributeSet attrs, int defStyle) {

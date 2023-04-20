@@ -1,4 +1,4 @@
-package com.example.termproject.framework;
+package com.example.termproject.MonsterSurvival.framework;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -45,4 +45,5 @@ public class Sprite implements IGameObject {
     public void draw(Canvas canvas) {
         canvas.drawBitmap(bitmap, null, dstRect, null);
     }
+
 }

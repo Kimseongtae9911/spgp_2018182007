@@ -1,4 +1,4 @@
-package com.example.termproject.framework;
+package com.example.termproject.MonsterSurvival.framework;
 
 import android.graphics.Canvas;
 

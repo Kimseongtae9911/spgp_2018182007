@@ -1,12 +1,14 @@
-package com.example.termproject.app;
+package com.example.termproject.MonsterSurvival.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.example.termproject.framework.BaseScene;
-import com.example.termproject.framework.GameView;
-import com.example.termproject.game.MainScene;
+import com.example.termproject.MonsterSurvival.framework.BaseScene;
+import com.example.termproject.MonsterSurvival.framework.GameView;
+import com.example.termproject.MonsterSurvival.game.MainScene;
+import com.example.termproject.R;
+
 public class MainActivity extends AppCompatActivity {
 
     private GameView gameView;
@@ -15,9 +17,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gameView = new GameView(this);
+        gameView.setFullScreen();
         setContentView(gameView);
 
-        //new MainScene().pushScene();
+        new MainScene().pushScene();
     }
 
     @Override
