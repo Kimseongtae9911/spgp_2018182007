@@ -27,12 +27,17 @@ public class Hero extends AnimSprite {
     private float dx = 0;
     private float dy = 0;
 
+    private float moveX = 0;
+    private float moveY = 0;
+
     public Hero() {
         super(R.mipmap.hero, Metrics.game_width /2, Metrics.game_height / 2, HERO_WIDTH, HERO_HEIGHT, 2, 10, 6);
-        Log.d(TAG, "Hero Create: " + this.y);
     }
 
     public void setDir(float dx, float dy) {this.dx= dx; this.dy =dy;}
+
+    public float getMoveX() {return moveX;}
+    public float getMoveY() {return moveY;}
 
     @Override
     public void update() {
@@ -43,10 +48,28 @@ public class Hero extends AnimSprite {
         x += dx * SPEED * time;
         y += dy * SPEED * time;
 
-        if (x < HERO_LEFT) x = HERO_LEFT;
-        if (x > HERO_RIGHT) x = HERO_RIGHT;
-        if (y < HERO_UP) y = HERO_UP;
-        if (y > HERO_DOWN) y = HERO_DOWN;
+        if (x < HERO_LEFT) {
+            moveX = -1;
+            x = HERO_LEFT;
+        }
+        else if (x > HERO_RIGHT) {
+            moveX = 1;
+            x = HERO_RIGHT;
+        }
+        else {
+            moveX = 0;
+        }
+        if (y < HERO_UP) {
+            moveY = -1;
+            y = HERO_UP;
+        }
+        else if (y > HERO_DOWN) {
+            moveY = 1;
+            y = HERO_DOWN;
+        }
+        else{
+            moveY = 0;
+        }
 
         fixDstRect();
     }
