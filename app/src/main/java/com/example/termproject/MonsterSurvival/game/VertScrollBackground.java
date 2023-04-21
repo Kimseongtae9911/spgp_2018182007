@@ -30,4 +30,5 @@ public class VertScrollBackground extends Sprite {
             canvas.drawBitmap(bitmap, null, dstRect, null);
             curr += height;
         }
-    }}
+    }
+}

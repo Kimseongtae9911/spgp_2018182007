@@ -42,6 +42,10 @@ public class InfiniteScrollBackground extends Sprite {
         while (currX < Metrics.game_width) {
             dstRect.set(currX, currY, currX + width, currY + height);
             canvas.drawBitmap(bitmap, null, dstRect, null);
+            dstRect.set(currX + width, currY, currX + width * 2, currY + height);
+            canvas.drawBitmap(bitmap, null, dstRect, null);
+            dstRect.set(currX, currY + height, currX + width, currY + height * 2);
+            canvas.drawBitmap(bitmap, null, dstRect, null);
             currY += height;
             currX += width;
         }
