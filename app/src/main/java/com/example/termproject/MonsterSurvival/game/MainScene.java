@@ -27,7 +27,7 @@ public class MainScene extends BaseScene {
         joyStick.setJoystickListener(new JoyStick.JoystickListener() {
             @Override
             public void onJoystickMoved(float xPercent, float yPercent) {
-
+                hero.setDir(xPercent, yPercent);
             }
         });
         add(Layer.UI, joyStick);
@@ -38,11 +38,6 @@ public class MainScene extends BaseScene {
         switch (action) {
         case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
-                joyStick.onTouch(event);
-                float x = Metrics.toGameX(event.getX());
-                float y = Metrics.toGameY(event.getY());
-                hero.setTargetPosition(x, y);
-                return true;
             case MotionEvent.ACTION_UP:
                 joyStick.onTouch(event);
                 return true;

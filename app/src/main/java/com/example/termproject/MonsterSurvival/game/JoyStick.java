@@ -84,7 +84,6 @@ public class JoyStick extends SurfaceView implements SurfaceHolder.Callback, IGa
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Log.d(TAG, "Draw centerX: " + centerX + " ceterY: " + centerY + " baseRadius: " + baseRadius);
         canvas.drawCircle(centerX, centerY, baseRadius, basePaint);
         canvas.drawCircle(xValue * baseRadius + centerX, yValue * baseRadius + centerY, hatRadius, hatPaint);
     }

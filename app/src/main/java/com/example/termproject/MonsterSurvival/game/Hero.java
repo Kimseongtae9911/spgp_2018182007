@@ -19,38 +19,35 @@ public class Hero extends AnimSprite {
     private static final float TARGET_RADIUS = 0.5f;
     private static final float SPEED = 10.0f;
     private static final float HERO_LEFT = HERO_WIDTH / 2;
-    private static final float HERO_RIGHT = 9.0f - HERO_WIDTH / 2;
-    private static final String TAG = Hero.class.getSimpleName();;
+    private static final float HERO_RIGHT = Metrics.game_width - HERO_WIDTH / 2;
+    private static final float HERO_UP = HERO_HEIGHT / 2;
+    private static final float HERO_DOWN = Metrics.game_height- HERO_HEIGHT / 2;
+    private static final String TAG = Hero.class.getSimpleName();
 
-    private float tx;
+    private float dx = 0;
+    private float dy = 0;
 
     public Hero() {
         super(R.mipmap.hero, Metrics.game_width /2, Metrics.game_height / 2, HERO_WIDTH, HERO_HEIGHT, 2, 10, 6);
-        tx = x;
+        Log.d(TAG, "Hero Create: " + this.y);
     }
 
-    public void setTargetPosition(float tx, float ty) {
-        this.tx = tx;
-    }
+    public void setDir(float dx, float dy) {this.dx= dx; this.dy =dy;}
 
     @Override
     public void update() {
         super.update();
 
         float time = BaseScene.frameTime;
-        if (tx >= x) {
-            x += SPEED * time;
-            if (x > tx) {
-                x = tx;
-            }
-        } else {
-            x -= SPEED * time;
-            if (x < tx) {
-                x = tx;
-            }
-        }
-        if (x < HERO_LEFT) x = tx = HERO_LEFT;
-        if (x > HERO_RIGHT) x = tx = HERO_RIGHT;
+
+        x += dx * SPEED * time;
+        y += dy * SPEED * time;
+
+        if (x < HERO_LEFT) x = HERO_LEFT;
+        if (x > HERO_RIGHT) x = HERO_RIGHT;
+        if (y < HERO_UP) y = HERO_UP;
+        if (y > HERO_DOWN) y = HERO_DOWN;
+
         fixDstRect();
     }
 
