@@ -51,3 +51,10 @@ https://blog.naver.com/sonny123123/222903131171
 https://blog.naver.com/anisaver/222936080187
 
 https://blog.naver.com/fun3200/222896160919
+
+==================================================================================================================================
+
+# 추가 상세기획
+로비 UI
+
+![image](https://user-images.githubusercontent.com/84197808/233760595-0dc8b7d7-a502-49d4-9a50-c5e409ca3305.png)
