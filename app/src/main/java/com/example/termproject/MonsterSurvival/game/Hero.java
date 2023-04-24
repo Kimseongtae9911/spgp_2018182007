@@ -8,10 +8,11 @@ import android.util.Log;
 import com.example.termproject.MonsterSurvival.framework.AnimSprite;
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
 import com.example.termproject.MonsterSurvival.framework.GameView;
+import com.example.termproject.MonsterSurvival.framework.IBoxCollidable;
 import com.example.termproject.MonsterSurvival.framework.Metrics;
 import com.example.termproject.R;
 
-public class Hero extends AnimSprite {
+public class Hero extends AnimSprite implements IBoxCollidable {
     private static final float HERO_X = 4.5f;
     private static final float HERO_Y = 14.8f;
     private static final float HERO_WIDTH = 72 * 0.0243f; //1.75f;
@@ -29,7 +30,7 @@ public class Hero extends AnimSprite {
 
     private float moveX = 0;
     private float moveY = 0;
-
+    protected RectF collisionRect = new RectF();
     public Hero() {
         super(R.mipmap.hero, Metrics.game_width /2, Metrics.game_height / 2, HERO_WIDTH, HERO_HEIGHT, 2, 10, 6);
     }
@@ -38,7 +39,8 @@ public class Hero extends AnimSprite {
 
     public float getMoveX() {return moveX;}
     public float getMoveY() {return moveY;}
-
+    public float getX() {return x;}
+    public float getY() {return y;}
     @Override
     public void update() {
         super.update();
@@ -72,10 +74,14 @@ public class Hero extends AnimSprite {
         }
 
         fixDstRect();
+        collisionRect.set(dstRect);
     }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
     }
+
+    @Override
+    public RectF getCollisionRect() {return collisionRect;}
 }

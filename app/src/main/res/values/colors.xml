@@ -2,6 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="monster_gauge_bg">#F5AAA4</color>
+    <color name="monster_gauge_fg">#2B95F1</color>
     <color name="main_title_bg">#56D8F436</color>
     <color name="main_title_fg">#100853</color>
 </resources>

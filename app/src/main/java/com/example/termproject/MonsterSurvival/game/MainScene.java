@@ -12,17 +12,16 @@ import java.util.ArrayList;
 
 public class MainScene extends BaseScene {
     private static final String TAG = MainScene.class.getSimpleName();
-    private final Hero hero;
+    private static final Hero hero = new Hero();
     private final InfiniteScrollBackground background;
     private JoyStick joyStick;
 
     public enum Layer {
-        bg1, player, UI, COUNT
+        bg1, monster, player, UI, controller, COUNT
     }
 
     public MainScene(Context context) {
         initLayers(Layer.COUNT);
-        hero = new Hero();
         add(Layer.player, hero);
         background = new InfiniteScrollBackground(R.mipmap.background);
         add(Layer.bg1, background);
@@ -35,6 +34,8 @@ public class MainScene extends BaseScene {
             }
         });
         add(Layer.UI, joyStick);
+        add(Layer.controller, new MonsterGenerator());
+        add(Layer.controller, new CollisionChecker());
     }
 
     public boolean onTouchEvent(MotionEvent event) {
@@ -55,4 +56,11 @@ public class MainScene extends BaseScene {
         background.setSpeedX(hero.getMoveX());
         background.setSpeedY(hero.getMoveY());
     }
+
+    public static float getPlayerX() {return hero.getX();}
+    public static float getPlayerY() {return hero.getY();}
+
+    public static float getPlayerMoveX() {return hero.getMoveX();}
+    public static float getPlayerMoveY() {return hero.getMoveY();}
+
 }
