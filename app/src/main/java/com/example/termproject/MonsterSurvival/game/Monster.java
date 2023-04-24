@@ -13,7 +13,17 @@ import com.example.termproject.MonsterSurvival.framework.Metrics;
 import com.example.termproject.MonsterSurvival.framework.RecycleBin;
 import com.example.termproject.R;
 
+import java.util.Random;
+
 public class Monster extends AnimSprite implements IRecyclable, IBoxCollidable {
+    private static final float SPAWN_POSX[] = {
+            -3, Metrics.game_width + 3,
+            Metrics.game_width / 2 - 2, Metrics.game_width / 2 + 2
+    };
+    private static final float SPAWN_POSY[] = {
+            Metrics.game_height / 2 - 3, Metrics.game_height / 2 + 3
+            -3, Metrics.game_height + 3,
+    };
     private static final float SPEED = 2.0f;
 
     public static final float SIZE = 1.8f;
@@ -28,10 +38,12 @@ public class Monster extends AnimSprite implements IRecyclable, IBoxCollidable {
     protected Gauge gauge = new Gauge(0.1f, R.color.monster_gauge_fg, R.color.monster_gauge_bg);
 
     static Monster get(int index, int level) {
+        Random r = new Random();
         Monster enemy = (Monster) RecycleBin.get(Monster.class);
         if (enemy != null) {
-            enemy.x = (Metrics.game_width / 10) * (2 * index + 1);
-            enemy.y = -SIZE/2;
+            int num = r.nextInt(3);
+            enemy.x = SPAWN_POSX[num];
+            enemy.y = SPAWN_POSY[num];
             enemy.fixDstRect();
             enemy.init(level);
             return enemy;
@@ -50,6 +62,10 @@ public class Monster extends AnimSprite implements IRecyclable, IBoxCollidable {
             this.bitmap = BitmapPool.get(R.mipmap.monster1);
         }
         this.hp = this.maxHp = (level + 1) * 10;
+        Random r = new Random();
+        int num = r.nextInt(3);
+        this.x = SPAWN_POSX[num];
+        this.y = SPAWN_POSY[num];
     }
 
     @Override

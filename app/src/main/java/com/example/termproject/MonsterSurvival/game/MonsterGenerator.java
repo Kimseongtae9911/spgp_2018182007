@@ -13,7 +13,6 @@ public class MonsterGenerator implements IGameObject {
     private static final String TAG = Monster.class.getSimpleName();
     private float time;
     private float difficultyTime = 0;
-    private int wave;
 
     @Override
     public void update() {
@@ -26,13 +25,9 @@ public class MonsterGenerator implements IGameObject {
     }
 
     private void generate() {
-        wave++;
-        Random r = new Random();
         BaseScene scene = BaseScene.getTopScene();
         for (int i = 0; i < 5; i++) {
-            int level = (wave + 15) / 10 - r.nextInt(3);
-            if (level < 0) level = 0;
-            scene.add(MainScene.Layer.monster, Monster.get(i, level));
+            scene.add(MainScene.Layer.monster, Monster.get(i, (int)difficultyTime * 5));
         }
     }
 
