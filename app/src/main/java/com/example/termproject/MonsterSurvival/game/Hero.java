@@ -18,12 +18,22 @@ public class Hero extends AnimSprite implements IBoxCollidable {
     private static final float HERO_WIDTH = 72 * 0.0243f; //1.75f;
     private static final float HERO_HEIGHT = 80 * 0.0243f; //1.75f;
     private static final float TARGET_RADIUS = 0.5f;
-    private static final float SPEED = 10.0f;
+    private static final float SPEED = 5.0f;
     private static final float HERO_LEFT = HERO_WIDTH / 2;
     private static final float HERO_RIGHT = Metrics.game_width - HERO_WIDTH / 2;
     private static final float HERO_UP = HERO_HEIGHT / 2;
     private static final float HERO_DOWN = Metrics.game_height- HERO_HEIGHT / 2;
     private static final String TAG = Hero.class.getSimpleName();
+
+    //Player Stats
+    private static final float maxHp = 100;
+    private float curHp = 100;
+    private float power = 10;
+    private float speed = SPEED;
+    private float defense = 10;
+    private float cooltime = 0;
+
+    //Player Stats
 
     private float dx = 0;
     private float dy = 0;
@@ -41,14 +51,16 @@ public class Hero extends AnimSprite implements IBoxCollidable {
     public float getMoveY() {return moveY;}
     public float getX() {return x;}
     public float getY() {return y;}
+
+    public void decreaseHp(float power) {curHp -= power;}
     @Override
     public void update() {
         super.update();
 
         float time = BaseScene.frameTime;
 
-        x += dx * SPEED * time;
-        y += dy * SPEED * time;
+        x += dx * speed * time;
+        y += dy * speed * time;
 
         if (x < HERO_LEFT) {
             moveX = -1;

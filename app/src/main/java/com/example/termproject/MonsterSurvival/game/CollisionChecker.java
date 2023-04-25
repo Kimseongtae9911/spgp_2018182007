@@ -35,6 +35,7 @@ public class CollisionChecker implements IGameObject {
             Hero player = (Hero)players.get(0);
             if (collides(monster, player)) {
                 Log.d(TAG, "Decrease Player HP");
+                player.decreaseHp(10);
                 break;
             }
         }
