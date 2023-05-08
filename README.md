@@ -71,3 +71,29 @@ https://blog.naver.com/fun3200/222896160919
 쿨타임(Cooltime) : 수치만큼 모든 스킬 재사용 대기시간 감소
 
 
+스킬 종류
+
+![image](https://user-images.githubusercontent.com/84197808/236837811-a573b8c5-ca10-4880-8df6-72e881f22caa.png)
+
+쿨타임 3초, 가장 가까운 적을 공격하며 적과 충돌 시 사라진다
+
+![image](https://user-images.githubusercontent.com/84197808/236838069-7cd86287-f72a-44cc-81d7-c0eee50066f6.png)
+
+쿨타임 5초, 랜덤한 방향으로 날라가며 모든 적을 관통
+
+![image](https://user-images.githubusercontent.com/84197808/236838201-8099a1fb-ebde-4a5f-a0d6-119af4c71762.png)
+
+쿨타임 9초, 바라보고 있는 방향으로 화면 끝까지 번개를 발사, 모든 적을 관통
+
+![image](https://user-images.githubusercontent.com/84197808/236838328-cdcee585-7b89-48bc-a121-3faed88e1bf5.png)
+
+쿨타임 9초, 현재 위치를 중심으로 원형으로 퍼지며 주변 적에게 피해를 준다
+
+![image](https://user-images.githubusercontent.com/84197808/236838523-6cba54dc-6c96-4f3e-9851-defec06d4c30.png)
+
+쿨타임 20초, 데미지 1회 무효, 효과 발동 직후 쿨타임 20초
+
+![image](https://user-images.githubusercontent.com/84197808/236838755-68435b48-e033-448b-991b-7c02cc73bf87.png)
+
+쿨타임 15초, 주변에 불꽃이 4곳 떨어지며, 2초동안 해당 지역 몬스터들에게 피해를 입힌다
+
