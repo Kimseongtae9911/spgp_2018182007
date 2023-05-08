@@ -97,3 +97,57 @@ https://blog.naver.com/fun3200/222896160919
 
 쿨타임 15초, 주변에 불꽃이 4곳 떨어지며, 2초동안 해당 지역 몬스터들에게 피해를 입힌다
 
+==================================================================================
+
+# 스마트폰 게임프로그래밍 2차발표
+
+# 게임 컨셉
+● 프로젝트 이름 : 몬스터 생존기 
+
+● High Concept : 재화를 이용하여 캐릭터를 강화하고, 강화한 캐릭터로 몬스터를 피해 살아남는 서바이벌 액션 게임
+
+● 핵심 메카닉 : 캐릭터를 강화하여 시간이 지날수록 강해지는 몬스터들로부터 살아남기 
+
+# 현재까지의 진행 상황
+
+![image](https://user-images.githubusercontent.com/84197808/236854860-96438715-32cc-48a5-b780-a1f44fb94940.png)
+
+# 주차별 git commit 횟수
+
+![image](https://user-images.githubusercontent.com/84197808/236854959-0d7ff14c-9040-4a77-b3d3-a5bac351bab2.png)
+
+# MainScene클래스 구성 정보
+
+![image](https://user-images.githubusercontent.com/84197808/236855089-f5c6a85e-2c58-49d7-82d4-51e696512b90.png)
+
+# JoyStick 주요코드
+
+![image](https://user-images.githubusercontent.com/84197808/236855173-4e2c2f08-a8ba-4a33-b398-0d7d28c707a5.png)
+
+![image](https://user-images.githubusercontent.com/84197808/236855242-76c34899-7257-452e-9956-a5ff2da38658.png)
+
+
+1. 터치 이벤트가 발생하였을 때 조이스틱의 방향을 구한다
+2. 조이스틱의 콜백함수인 onJoystickMoved를 호출하여 hero의 방향을 설정한다
+
+# Hero 주요코드
+
+![image](https://user-images.githubusercontent.com/84197808/236855453-a3bf1a98-d6da-437c-8581-31ebc712a98e.png)
+
+![image](https://user-images.githubusercontent.com/84197808/236855480-e20b74bc-2050-4a06-98c9-8b99498bee20.png)
+
+1. Hero가 화면 밖으로 움직이려고 하면 Hero의 좌표는 고정시키고 맵스크롤링을 위해 moveX, moveY의 값을 설정한다
+2. 해당 값을 InfiniteScrollBackground에 적용시킨다
+
+# InfiniteScrollBackGround 주요코드
+
+![image](https://user-images.githubusercontent.com/84197808/236855833-1f045646-6a4c-4c36-ab9c-b4e630bfeec1.png)
+
+플레이어를 기준으로 맵을 좌우, 상하, 대각선에 그려서 플레이어가 맵을 계속 돌아다니는 것처럼 만든다
+
+# Monster 주요코드
+
+![image](https://user-images.githubusercontent.com/84197808/236856061-edf1c065-9e4c-4fe7-8bc3-fdd1a021e833.png)
+
+1. 플레이어의 좌표를 이용하여 이동방향을 설정한다
+2. 맵이 스크롤중이라면 스크롤하는 값만큼 좌표에 추가연산을 한다
