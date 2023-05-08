@@ -151,3 +151,8 @@ https://blog.naver.com/fun3200/222896160919
 
 1. 플레이어의 좌표를 이용하여 이동방향을 설정한다
 2. 맵이 스크롤중이라면 스크롤하는 값만큼 좌표에 추가연산을 한다
+
+# 2차발표 영상 링크
+
+https://www.youtube.com/watch?v=X5-Xh-3JUfg
+
