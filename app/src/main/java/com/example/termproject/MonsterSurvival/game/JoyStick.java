@@ -15,9 +15,10 @@ import android.view.View;
 import androidx.annotation.NonNull;
 
 import com.example.termproject.MonsterSurvival.framework.IGameObject;
+import com.example.termproject.MonsterSurvival.framework.ITouchable;
 import com.example.termproject.MonsterSurvival.framework.Metrics;
 
-public class JoyStick extends SurfaceView implements SurfaceHolder.Callback, IGameObject {
+public class JoyStick extends SurfaceView implements SurfaceHolder.Callback, IGameObject, ITouchable {
     private static final String TAG = JoyStick.class.getSimpleName();;
     private float centerX;
     private float centerY;
@@ -88,7 +89,7 @@ public class JoyStick extends SurfaceView implements SurfaceHolder.Callback, IGa
         canvas.drawCircle(xValue * baseRadius + centerX, yValue * baseRadius + centerY, hatRadius, hatPaint);
     }
 
-    public boolean onTouch(MotionEvent e) {
+    public boolean onTouchEvent(MotionEvent e) {
         if(e.getAction() != e.ACTION_UP)
         {
             float x = Metrics.toGameX(e.getX());

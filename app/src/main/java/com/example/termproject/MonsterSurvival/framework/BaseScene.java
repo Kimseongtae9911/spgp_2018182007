@@ -9,14 +9,19 @@ import android.view.MotionEvent;
 
 import com.example.termproject.MonsterSurvival.BuildConfig;
 
+import java.sql.Array;
 import java.util.ArrayList;
 
 public class BaseScene {
+    protected Paint transparentPaint = new Paint();
     private static ArrayList<BaseScene> stack = new ArrayList<>();
     public static float frameTime;
     protected static Handler handler = new Handler();
     private static Paint bboxPaint;
+    protected boolean pause = false;
+    protected ArrayList<ArrayList<IGameObject>> layers = new ArrayList<>();
 
+    protected ArrayList<IGameObject> pauseObject = new ArrayList<>();
     public static BaseScene getTopScene() {
         int top = stack.size() - 1;
         if (top < 0) return null;
@@ -58,6 +63,9 @@ public class BaseScene {
         });
     }
 
+    public void addPauseObject(IGameObject obj) {
+        pauseObject.add(obj);
+    }
     public int count() {
         int count = 0;
         for (ArrayList<IGameObject> objects: layers) {
@@ -96,9 +104,15 @@ public class BaseScene {
                 }
             }
         }
+
+        if(pause) {
+            canvas.drawRect(0.f, 0.f, Metrics.game_width, Metrics.game_height, transparentPaint);
+            for(IGameObject obj : pauseObject) {
+                obj.draw(canvas);
+            }
+        }
     }
 
-    protected ArrayList<ArrayList<IGameObject>> layers = new ArrayList<>();
     public <E extends Enum> ArrayList<IGameObject> getObjectsAt(E layerEnum) {
         return layers.get(layerEnum.ordinal());
     }

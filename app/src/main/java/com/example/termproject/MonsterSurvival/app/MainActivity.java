@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
 import com.example.termproject.MonsterSurvival.framework.GameView;
+import com.example.termproject.MonsterSurvival.framework.Metrics;
 import com.example.termproject.MonsterSurvival.game.MainScene;
 import com.example.termproject.R;
 
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Metrics.reset();
         gameView = new GameView(this);
         gameView.setFullScreen();
         setContentView(gameView);

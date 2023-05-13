@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
+import com.example.termproject.MonsterSurvival.framework.Metrics;
 import com.example.termproject.R;
 import com.example.termproject.databinding.ActivityTitleBinding;
 
@@ -19,6 +20,7 @@ public class TitleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Metrics.reset();
         binding = ActivityTitleBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         createAnimator();

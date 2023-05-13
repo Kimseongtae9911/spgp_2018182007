@@ -17,4 +17,12 @@ public class Metrics {
     public static float toGameY(float y) {
         return (y - y_offset) / scale;
     }
+
+    public static void reset() {
+        scale = 1.0f;
+        game_width = 9.0f;
+        game_height = 16.0f;
+        x_offset = 0;
+        y_offset = 0;
+    }
 }
