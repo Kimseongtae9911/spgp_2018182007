@@ -14,6 +14,7 @@ public class MainScene extends BaseScene {
     private static final String TAG = MainScene.class.getSimpleName();
     private static final Hero hero = new Hero();
     private final InfiniteScrollBackground background;
+    private Timer timer = new Timer();
     private JoyStick joyStick;
 
     public enum Layer {
@@ -34,6 +35,7 @@ public class MainScene extends BaseScene {
             }
         });
         add(Layer.UI, joyStick);
+        add(Layer.UI, timer);
         add(Layer.controller, new MonsterGenerator());
         add(Layer.controller, new CollisionChecker());
     }

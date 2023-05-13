@@ -15,14 +15,14 @@ import com.example.termproject.R;
 public class Hero extends AnimSprite implements IBoxCollidable {
     private static final float HERO_X = 4.5f;
     private static final float HERO_Y = 14.8f;
-    private static final float HERO_WIDTH = 72 * 0.0243f; //1.75f;
-    private static final float HERO_HEIGHT = 80 * 0.0243f; //1.75f;
+    private static final float HERO_WIDTH = 46 * 0.02f;
+    private static final float HERO_HEIGHT = 42 * 0.02f;
     private static final float TARGET_RADIUS = 0.5f;
     private static final float SPEED = 5.0f;
-    private static final float HERO_LEFT = HERO_WIDTH / 2;
-    private static final float HERO_RIGHT = Metrics.game_width - HERO_WIDTH / 2;
-    private static final float HERO_UP = HERO_HEIGHT / 2;
-    private static final float HERO_DOWN = Metrics.game_height- HERO_HEIGHT / 2;
+    private static final float HERO_LEFT = HERO_WIDTH / 2 + 1.0f;
+    private static final float HERO_RIGHT = Metrics.game_width - HERO_WIDTH / 2 - 1.0f;
+    private static final float HERO_UP = HERO_HEIGHT / 2 + 1.5f;
+    private static final float HERO_DOWN = Metrics.game_height- HERO_HEIGHT / 2 - 1.5f;
     private static final String TAG = Hero.class.getSimpleName();
 
     //Player Stats

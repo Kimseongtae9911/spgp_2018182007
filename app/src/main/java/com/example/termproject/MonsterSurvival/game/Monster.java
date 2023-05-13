@@ -16,17 +16,11 @@ import com.example.termproject.R;
 import java.util.Random;
 
 public class Monster extends AnimSprite implements IRecyclable, IBoxCollidable {
-    private static final float SPAWN_POSX[] = {
-            -3, Metrics.game_width + 3,
-            Metrics.game_width / 2 - 2, Metrics.game_width / 2 + 2
-    };
-    private static final float SPAWN_POSY[] = {
-            Metrics.game_height / 2 - 3, Metrics.game_height / 2 + 3
-            -3, Metrics.game_height + 3,
-    };
     private static final float SPEED = 2.0f;
 
     public static final float SIZE = 1.8f;
+    public static final float MONSTER_WIDTH = 58.f * 0.015f;
+    public static final float MONSTER_HEIGHT = 62.f * 0.015f;
 
     private int level;
     protected int hp, maxHp;
@@ -35,15 +29,31 @@ public class Monster extends AnimSprite implements IRecyclable, IBoxCollidable {
     private float dy =0;
     protected RectF collisionRect = new RectF();
 
-    protected Gauge gauge = new Gauge(0.1f, R.color.monster_gauge_fg, R.color.monster_gauge_bg);
+    protected Gauge gauge = new Gauge(0.3f, R.color.monster_gauge_fg, R.color.monster_gauge_bg);
 
     static Monster get(int index, int level) {
         Random r = new Random();
         Monster enemy = (Monster) RecycleBin.get(Monster.class);
         if (enemy != null) {
-            int num = r.nextInt(3);
-            enemy.x = SPAWN_POSX[num];
-            enemy.y = SPAWN_POSY[num];
+            int spawnSide = r.nextInt(4);
+            switch (spawnSide) {
+                case 0: // Left
+                    enemy.x = -MONSTER_WIDTH;
+                    enemy.y = Metrics.game_height * r.nextFloat();
+                    break;
+                case 1: // Right
+                    enemy.x = Metrics.game_width;
+                    enemy.y = Metrics.game_height * r.nextFloat();
+                    break;
+                case 2: // Top
+                    enemy.x = Metrics.game_width * r.nextFloat();
+                    enemy.y = -MONSTER_HEIGHT;
+                    break;
+                case 3: // Bottom
+                    enemy.x = Metrics.game_width * r.nextFloat();
+                    enemy.y = Metrics.game_height;
+                    break;
+            }
             enemy.fixDstRect();
             enemy.init(level);
             return enemy;
@@ -51,7 +61,7 @@ public class Monster extends AnimSprite implements IRecyclable, IBoxCollidable {
         return new Monster(index, level);
     }
     private Monster(int index, int level) {
-        super(R.mipmap.monster1, (Metrics.game_width / 10) * (2 * index + 1), -SIZE/2, SIZE, SIZE, 1, 0, 10);
+        super(R.mipmap.monster1, (Metrics.game_width / 10) * (2 * index + 1), -SIZE/2, MONSTER_WIDTH, MONSTER_HEIGHT, 1, 0, 10);
         this.level = level;
         init(level);
     }
@@ -63,10 +73,27 @@ public class Monster extends AnimSprite implements IRecyclable, IBoxCollidable {
         }
         this.hp = this.maxHp = (level + 1) * 10;
         Random r = new Random();
-        int num = r.nextInt(3);
-        this.x = SPAWN_POSX[num];
-        this.y = SPAWN_POSY[num];
+        int spawnSide = r.nextInt(4);
+        switch (spawnSide) {
+            case 0: // Left
+                this.x = -MONSTER_WIDTH;
+                this.y = Metrics.game_height * r.nextFloat();
+                break;
+            case 1: // Right
+                this.x = Metrics.game_width;
+                this.y = Metrics.game_height * r.nextFloat();
+                break;
+            case 2: // Top
+                this.x = Metrics.game_width * r.nextFloat();
+                this.y = -MONSTER_HEIGHT;
+                break;
+            case 3: // Bottom
+                this.x = Metrics.game_width * r.nextFloat();
+                this.y = Metrics.game_height;
+                break;
+        }
     }
+
 
     @Override
     public void update() {
