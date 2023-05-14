@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Timer implements IGameObject {
-    private float time = 0.f;
+    private float time = 290.f;
     private final Paint timePaint;
     private final float TEXT_SIZE = Metrics.toGameY(0.2f);
     private final float LETTER_SPACING = -0.5f;
@@ -36,6 +36,13 @@ public class Timer implements IGameObject {
         fontMetrics = timePaint.getFontMetrics();
         float textHeight = fontMetrics.descent - fontMetrics.ascent;
         centerY = textHeight;
+    }
+
+    public float getTime() {
+        return time;
+    }
+    public void addTime(float add) {
+        time += add;
     }
 
     public int getDigitCount(int number) {

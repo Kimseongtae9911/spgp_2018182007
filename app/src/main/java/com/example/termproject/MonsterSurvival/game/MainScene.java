@@ -2,6 +2,7 @@ package com.example.termproject.MonsterSurvival.game;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -20,6 +21,10 @@ import java.util.ArrayList;
 
 public class MainScene extends BaseScene {
     private static final String TAG = MainScene.class.getSimpleName();
+    private ArrayList<IGameObject> pauseObject = new ArrayList<>();
+    private ArrayList<IGameObject> nextRoundObject = new ArrayList<>();
+    private boolean nextRound = false;
+    private boolean pause = false;
     private static final Hero hero = new Hero();
     private final InfiniteScrollBackground background;
     private Timer timer = new Timer();
@@ -31,6 +36,7 @@ public class MainScene extends BaseScene {
 
     public MainScene(Context context) {
         initLayers(Layer.COUNT);
+        hero.reset();
         transparentPaint.setColor(Color.GRAY);
         transparentPaint.setAlpha(128);
 
@@ -45,6 +51,23 @@ public class MainScene extends BaseScene {
                 hero.setDir(xPercent, yPercent);
             }
         });
+
+        addNextRoundObject(new Button(R.mipmap.lobby_btn, Metrics.game_width / 2- 2.0f, Metrics.game_height / 2, 3.78f, 6.36f, new Button.Callback() {
+            @Override
+            public boolean onTouch(Button.Action action) {
+                nextRound = false;
+                context.startActivity(new Intent(context, TitleActivity.class));
+                return true;
+            }
+        }));
+        addNextRoundObject(new Button(R.mipmap.nextround_btn, Metrics.game_width / 2 + 2.0f, Metrics.game_height / 2, 3.78f, 6.36f, new Button.Callback() {
+            @Override
+            public boolean onTouch(Button.Action action) {
+                nextRound = false;
+                timer.addTime(1.f);
+                return true;
+            }
+        }));
 
         //pause object
         addPauseObject(new Button(R.mipmap.resume_btn, Metrics.game_width / 2, 5.0f, 7.f, 3.f, new Button.Callback() {
@@ -88,6 +111,15 @@ public class MainScene extends BaseScene {
                 if (processed) return true;
             }
         }
+        else if(nextRound) {
+            for (IGameObject obj : nextRoundObject) {
+                if (!(obj instanceof ITouchable)) {
+                    continue;
+                }
+                boolean processed = ((ITouchable) obj).onTouchEvent(event);
+                if (processed) return true;
+            }
+        }
         else {
             ArrayList<IGameObject> objects = layers.get(Layer.touch.ordinal());
             for (IGameObject obj : objects) {
@@ -106,11 +138,40 @@ public class MainScene extends BaseScene {
     public void update(long elapsedNanos) {
         if(pause)
             return;
+        if(nextRound)
+            return;
         super.update(elapsedNanos);
         background.setSpeedX(hero.getMoveX());
         background.setSpeedY(hero.getMoveY());
+
+        if((int)timer.getTime() % 300 == 0) {
+            nextRound = true;
+        }
     }
 
+    @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+
+        if(pause) {
+            canvas.drawRect(0.f, 0.f, Metrics.game_width, Metrics.game_height, transparentPaint);
+            for(IGameObject obj : pauseObject) {
+                obj.draw(canvas);
+            }
+        }
+
+        if(nextRound) {
+            canvas.drawRect(0.f, 0.f, Metrics.game_width, Metrics.game_height, transparentPaint);
+            for(IGameObject obj : nextRoundObject) {
+                obj.draw(canvas);
+            }
+        }
+    }
+
+    public void addPauseObject(IGameObject obj) {
+        pauseObject.add(obj);
+    }
+    public void addNextRoundObject(IGameObject obj) {nextRoundObject.add(obj);}
     public static float getPlayerX() {return hero.getX();}
     public static float getPlayerY() {return hero.getY();}
 

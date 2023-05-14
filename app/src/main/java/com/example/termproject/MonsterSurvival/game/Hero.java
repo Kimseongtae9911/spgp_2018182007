@@ -13,8 +13,6 @@ import com.example.termproject.MonsterSurvival.framework.Metrics;
 import com.example.termproject.R;
 
 public class Hero extends AnimSprite implements IBoxCollidable {
-    private static final float HERO_X = 4.5f;
-    private static final float HERO_Y = 14.8f;
     private static final float HERO_WIDTH = 46 * 0.02f;
     private static final float HERO_HEIGHT = 42 * 0.02f;
     private static final float TARGET_RADIUS = 0.5f;
@@ -26,7 +24,7 @@ public class Hero extends AnimSprite implements IBoxCollidable {
     private static final String TAG = Hero.class.getSimpleName();
 
     //Player Stats
-    private static final float maxHp = 100;
+    private float maxHp = 100;
     private float curHp = 100;
     private float power = 10;
     private float speed = SPEED;
@@ -45,6 +43,20 @@ public class Hero extends AnimSprite implements IBoxCollidable {
         super(R.mipmap.hero, Metrics.game_width /2, Metrics.game_height / 2, HERO_WIDTH, HERO_HEIGHT, 2, 10, 6);
     }
 
+    public void reset() {
+        maxHp = 100;
+        curHp = 10;
+        power = 10;
+        speed = SPEED;
+        defense = 10;
+        cooltime = 0;
+        dx = 0;
+        dy = 0;
+        moveX = 0;
+        moveY = 0;
+        x = Metrics.game_width / 2;
+        y = Metrics.game_height / 2;
+    }
     public void setDir(float dx, float dy) {this.dx= dx; this.dy =dy;}
 
     public float getMoveX() {return moveX;}

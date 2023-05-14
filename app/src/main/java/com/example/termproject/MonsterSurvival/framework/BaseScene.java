@@ -18,10 +18,8 @@ public class BaseScene {
     public static float frameTime;
     protected static Handler handler = new Handler();
     private static Paint bboxPaint;
-    protected boolean pause = false;
     protected ArrayList<ArrayList<IGameObject>> layers = new ArrayList<>();
 
-    protected ArrayList<IGameObject> pauseObject = new ArrayList<>();
     public static BaseScene getTopScene() {
         int top = stack.size() - 1;
         if (top < 0) return null;
@@ -63,9 +61,6 @@ public class BaseScene {
         });
     }
 
-    public void addPauseObject(IGameObject obj) {
-        pauseObject.add(obj);
-    }
     public int count() {
         int count = 0;
         for (ArrayList<IGameObject> objects: layers) {
@@ -102,13 +97,6 @@ public class BaseScene {
                         canvas.drawRect(rect, bboxPaint);
                     }
                 }
-            }
-        }
-
-        if(pause) {
-            canvas.drawRect(0.f, 0.f, Metrics.game_width, Metrics.game_height, transparentPaint);
-            for(IGameObject obj : pauseObject) {
-                obj.draw(canvas);
             }
         }
     }
