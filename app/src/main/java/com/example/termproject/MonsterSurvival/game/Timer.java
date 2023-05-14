@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Timer implements IGameObject {
-    private float time = 290.f;
+    private float time = 0.f;
     private final Paint timePaint;
     private final float TEXT_SIZE = Metrics.toGameY(0.2f);
     private final float LETTER_SPACING = -0.5f;

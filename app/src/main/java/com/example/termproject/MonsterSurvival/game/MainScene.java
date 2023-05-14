@@ -29,6 +29,7 @@ public class MainScene extends BaseScene {
     private final InfiniteScrollBackground background;
     private Timer timer = new Timer();
     private JoyStick joyStick;
+    private Coin coin = new Coin();
 
     public enum Layer {
         bg1, monster, player, UI, touch, controller, COUNT
@@ -97,6 +98,7 @@ public class MainScene extends BaseScene {
 
         add(Layer.touch, joyStick);
         add(Layer.UI, timer);
+        add(Layer.UI, coin);
         add(Layer.controller, new MonsterGenerator());
         add(Layer.controller, new CollisionChecker());
     }
@@ -144,7 +146,7 @@ public class MainScene extends BaseScene {
         background.setSpeedX(hero.getMoveX());
         background.setSpeedY(hero.getMoveY());
 
-        if((int)timer.getTime() % 300 == 0) {
+        if((int)timer.getTime() % 180 == 0 && (int)timer.getTime() != 0) {
             nextRound = true;
         }
     }

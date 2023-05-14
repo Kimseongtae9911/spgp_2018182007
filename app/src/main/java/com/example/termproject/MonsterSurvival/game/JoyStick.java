@@ -19,7 +19,7 @@ import com.example.termproject.MonsterSurvival.framework.ITouchable;
 import com.example.termproject.MonsterSurvival.framework.Metrics;
 
 public class JoyStick extends SurfaceView implements SurfaceHolder.Callback, IGameObject, ITouchable {
-    private static final String TAG = JoyStick.class.getSimpleName();;
+    private static final String TAG = JoyStick.class.getSimpleName();
     private float centerX;
     private float centerY;
     private float baseRadius;
@@ -56,10 +56,12 @@ public class JoyStick extends SurfaceView implements SurfaceHolder.Callback, IGa
         basePaint = new Paint();
         basePaint.setColor(Color.GRAY);
         basePaint.setStyle(Paint.Style.FILL);
+        basePaint.setAlpha(100);
 
         hatPaint = new Paint();
         hatPaint.setColor(Color.BLUE);
         hatPaint.setStyle(Paint.Style.FILL);
+        hatPaint.setAlpha(150);
         getHolder().addCallback(this);
     }
 

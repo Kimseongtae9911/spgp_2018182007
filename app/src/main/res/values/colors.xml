@@ -4,6 +4,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="monster_gauge_bg">#F5AAA4</color>
     <color name="monster_gauge_fg">#2B95F1</color>
+    <color name="hero_hpGauge_bg">#A50000</color>
+    <color name="hero_hpGauge_fg">#FF0000</color>
+    <color name="hero_expGauge_bg">#005D00</color>
+    <color name="hero_expGauge_fg">#53FF4C</color>
+    <color name="coin_bg">#BDAE24</color>
     <color name="main_title_bg">#56D8F436</color>
     <color name="main_title_fg">#100853</color>
 </resources>
