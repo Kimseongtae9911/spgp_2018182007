@@ -7,11 +7,13 @@ import android.graphics.Color;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.app.Activity;
+import android.view.View;
 
 import com.example.termproject.MonsterSurvival.app.MainActivity;
 import com.example.termproject.MonsterSurvival.app.TitleActivity;
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
 import com.example.termproject.MonsterSurvival.framework.Button;
+import com.example.termproject.MonsterSurvival.framework.GameView;
 import com.example.termproject.MonsterSurvival.framework.IGameObject;
 import com.example.termproject.MonsterSurvival.framework.ITouchable;
 import com.example.termproject.MonsterSurvival.framework.Metrics;
@@ -32,12 +34,14 @@ public class MainScene extends BaseScene {
     private Coin coin = new Coin();
     private Score score = new Score();
 
+    GameView view;
     public enum Layer {
         bg1, monster, player, UI, touch, controller, COUNT
     }
 
-    public MainScene(Context context) {
+    public MainScene(Context context, GameView view) {
         initLayers(Layer.COUNT);
+        this.view = view;
         hero.reset();
         transparentPaint.setColor(Color.GRAY);
         transparentPaint.setAlpha(128);
@@ -176,10 +180,11 @@ public class MainScene extends BaseScene {
         pauseObject.add(obj);
     }
     public void addNextRoundObject(IGameObject obj) {nextRoundObject.add(obj);}
+
+    public GameView getView() {return view;}
     public static float getPlayerX() {return hero.getX();}
     public static float getPlayerY() {return hero.getY();}
 
     public static float getPlayerMoveX() {return hero.getMoveX();}
     public static float getPlayerMoveY() {return hero.getMoveY();}
-
 }

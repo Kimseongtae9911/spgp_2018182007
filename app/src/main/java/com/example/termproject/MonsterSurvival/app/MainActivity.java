@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         gameView.setFullScreen();
         setContentView(gameView);
 
-        new MainScene(this).pushScene();
+        new MainScene(this, gameView).pushScene();
     }
 
     @Override

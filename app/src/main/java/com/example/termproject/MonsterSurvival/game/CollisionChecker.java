@@ -3,6 +3,9 @@ package com.example.termproject.MonsterSurvival.game;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.CycleInterpolator;
+import android.view.animation.TranslateAnimation;
 
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
 import com.example.termproject.MonsterSurvival.framework.IBoxCollidable;
@@ -11,7 +14,14 @@ import com.example.termproject.MonsterSurvival.framework.IGameObject;
 import java.util.ArrayList;
 
 public class CollisionChecker implements IGameObject {
+    Animation shakeAnimation = new TranslateAnimation(0, 10, 0, 0);
     private static final String TAG = CollisionChecker.class.getSimpleName();
+    private static final int SHAKE_DURATION = 500;
+
+    public CollisionChecker() {
+        shakeAnimation.setDuration(SHAKE_DURATION);
+        shakeAnimation.setInterpolator(new CycleInterpolator(5));
+    }
 
     private boolean collides(IBoxCollidable obj1, IBoxCollidable obj2) {
         RectF r1 = obj1.getCollisionRect();
@@ -24,7 +34,6 @@ public class CollisionChecker implements IGameObject {
 
         return true;
     }
-
     @Override
     public void update() {
         MainScene scene = (MainScene) BaseScene.getTopScene();
@@ -36,6 +45,8 @@ public class CollisionChecker implements IGameObject {
             if (collides(monster, player)) {
                 Log.d(TAG, "Decrease Player HP");
                 player.decreaseHp(10);
+                if(!(shakeAnimation.hasStarted() && !shakeAnimation.hasEnded()))
+                    scene.getView().startAnimation(shakeAnimation);
                 break;
             }
         }
