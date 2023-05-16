@@ -8,8 +8,6 @@ import android.graphics.Typeface;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.example.termproject.MonsterSurvival.framework.GameView;
-import com.example.termproject.MonsterSurvival.framework.IGameObject;
-import com.example.termproject.MonsterSurvival.framework.Metrics;
 import com.example.termproject.MonsterSurvival.framework.Sprite;
 import com.example.termproject.R;
 
@@ -30,7 +28,11 @@ public class Coin extends Sprite {
         textPaint.setTypeface(Typeface.DEFAULT_BOLD);
         //textPaint.setLetterSpacing(LETTER_SPACE);
         rectPaint.setColor(ResourcesCompat.getColor(GameView.res, R.color.coin_bg, null));
-        num = 2345;
+        num = 0;
+    }
+
+    public void addCoin(int coin) {
+        num += coin;
     }
 
     @Override

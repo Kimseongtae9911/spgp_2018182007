@@ -30,6 +30,7 @@ public class MainScene extends BaseScene {
     private Timer timer = new Timer();
     private JoyStick joyStick;
     private Coin coin = new Coin();
+    private Score score = new Score();
 
     public enum Layer {
         bg1, monster, player, UI, touch, controller, COUNT
@@ -71,7 +72,7 @@ public class MainScene extends BaseScene {
         }));
 
         //pause object
-        addPauseObject(new Button(R.mipmap.resume_btn, Metrics.game_width / 2, 5.0f, 7.f, 3.f, new Button.Callback() {
+        addPauseObject(new Button(R.mipmap.resume_btn, Metrics.game_width / 2, 4.0f, 7.f, 3.f, new Button.Callback() {
             @Override
             public boolean onTouch(Button.Action action) {
                 pause = false;
@@ -79,7 +80,7 @@ public class MainScene extends BaseScene {
             }
         }));
 
-        addPauseObject(new Button(R.mipmap.exit_btn, Metrics.game_width / 2, 8.0f, 6.3f, 3.3f, new Button.Callback() {
+        addPauseObject(new Button(R.mipmap.exit_btn, Metrics.game_width / 2, 7.0f, 6.3f, 3.3f, new Button.Callback() {
             @Override
             public boolean onTouch(Button.Action action) {
                 pause = false;
@@ -87,6 +88,7 @@ public class MainScene extends BaseScene {
                 return true;
             }
         }));
+        addPauseObject(score);
 
         add(Layer.touch, new Button(R.mipmap.pause_btn, 9.0f - 0.6f, 0.6f, 1.f, 1.f, new Button.Callback() {
             @Override
