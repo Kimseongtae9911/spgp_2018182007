@@ -3,6 +3,7 @@ package com.example.termproject.MonsterSurvival.game;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.util.Log;
 
 import com.example.termproject.MonsterSurvival.framework.AnimSprite;
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
@@ -22,6 +23,7 @@ public class Monster extends AnimSprite implements IRecyclable, IBoxCollidable {
     public static final float SIZE = 1.8f;
     public static final float MONSTER_WIDTH = 58.f * 0.015f;
     public static final float MONSTER_HEIGHT = 62.f * 0.015f;
+    private static final String TAG = Monster.class.getSimpleName();;
 
     private int level;
     protected int hp, maxHp;
@@ -132,8 +134,8 @@ public class Monster extends AnimSprite implements IRecyclable, IBoxCollidable {
         x += SPEED * dx * BaseScene.frameTime;
         y += SPEED * dy * BaseScene.frameTime;
 
-        x += (-5 * MainScene.getPlayerMoveX() * BaseScene.frameTime);
-        y += (-5 * MainScene.getPlayerMoveY() * BaseScene.frameTime);
+        x += (-MainScene.getPlayerSpeed() * MainScene.getPlayerMoveX() * BaseScene.frameTime);
+        y += (-MainScene.getPlayerSpeed() * MainScene.getPlayerMoveY() * BaseScene.frameTime);
 
         fixDstRect();
 
@@ -175,8 +177,11 @@ public class Monster extends AnimSprite implements IRecyclable, IBoxCollidable {
         return 10 * (level + 1);
     }
     public int getPower() {return power;}
+    public float getX() {return x;}
+    public float getY() {return y;}
 
     public boolean decreaseLife(int power) {
+        Log.d(TAG, "HP: " + hp);
         hp -= power;
         if (hp <= 0) return true;
         return false;

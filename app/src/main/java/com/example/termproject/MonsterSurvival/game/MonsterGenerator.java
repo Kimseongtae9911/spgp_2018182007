@@ -27,7 +27,7 @@ public class MonsterGenerator implements IGameObject {
     private void generate() {
         BaseScene scene = BaseScene.getTopScene();
         for (int i = 0; i < 5; i++) {
-            scene.add(MainScene.Layer.monster, Monster.get(i, (int)difficultyTime * 5));
+            scene.add(MainScene.Layer.monster, Monster.get(i, (int)(difficultyTime / 30)));
         }
     }
 

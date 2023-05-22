@@ -10,6 +10,9 @@ import android.view.animation.TranslateAnimation;
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
 import com.example.termproject.MonsterSurvival.framework.IBoxCollidable;
 import com.example.termproject.MonsterSurvival.framework.IGameObject;
+import com.example.termproject.MonsterSurvival.framework.RecycleBin;
+import com.example.termproject.MonsterSurvival.game.skill.Skill;
+import com.example.termproject.MonsterSurvival.game.skill.SkillMissile;
 
 import java.util.ArrayList;
 
@@ -39,6 +42,8 @@ public class CollisionChecker implements IGameObject {
         MainScene scene = (MainScene) BaseScene.getTopScene();
         ArrayList<IGameObject> monsters = scene.getObjectsAt(MainScene.Layer.monster);
         ArrayList<IGameObject> players = scene.getObjectsAt(MainScene.Layer.player);
+        ArrayList<IGameObject> skills = scene.getObjectsAt(MainScene.Layer.skill);
+
         for (int ei = monsters.size() - 1; ei >= 0; ei--) {
             Monster monster = (Monster) monsters.get(ei);
             Hero player = (Hero)players.get(0);
@@ -47,6 +52,20 @@ public class CollisionChecker implements IGameObject {
                 if(!(shakeAnimation.hasStarted() && !shakeAnimation.hasEnded()))
                     scene.getView().startAnimation(shakeAnimation);
                 break;
+            }
+        }
+
+        for (int ei = monsters.size() - 1; ei >= 0; ei--) {
+            Monster monster = (Monster) monsters.get(ei);
+            for(int si = skills.size() - 1; si >= 0; si--) {
+                Skill skill = (Skill) skills.get(si);
+                if(collides(monster, skill) && skill.getActive()) {
+                    skill.setActive(false);
+                    scene.remove(skill);
+                    boolean remove = monster.decreaseLife(skill.getPower());
+                    if(remove)
+                        scene.remove(monster);
+                }
             }
         }
     }

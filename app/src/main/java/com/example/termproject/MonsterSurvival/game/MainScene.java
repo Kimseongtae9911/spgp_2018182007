@@ -17,6 +17,7 @@ import com.example.termproject.MonsterSurvival.framework.GameView;
 import com.example.termproject.MonsterSurvival.framework.IGameObject;
 import com.example.termproject.MonsterSurvival.framework.ITouchable;
 import com.example.termproject.MonsterSurvival.framework.Metrics;
+import com.example.termproject.MonsterSurvival.game.skill.SkillGenerator;
 import com.example.termproject.R;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class MainScene extends BaseScene {
 
     GameView view;
     public enum Layer {
-        bg1, monster, player, UI, touch, controller, COUNT
+        bg1, skill, monster, player, UI, touch, controller, COUNT
     }
 
     public MainScene(Context context, GameView view) {
@@ -107,6 +108,7 @@ public class MainScene extends BaseScene {
         add(Layer.UI, coin);
         add(Layer.controller, new MonsterGenerator());
         add(Layer.controller, new CollisionChecker());
+        add(Layer.controller, new SkillGenerator());
     }
 
     public boolean onTouchEvent(MotionEvent event) {
@@ -187,4 +189,6 @@ public class MainScene extends BaseScene {
 
     public static float getPlayerMoveX() {return hero.getMoveX();}
     public static float getPlayerMoveY() {return hero.getMoveY();}
+    public static float getPlayerSpeed() {return hero.getSpeed();}
+    public static int getPlayerPower() {return hero.getPower();}
 }

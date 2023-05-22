@@ -25,7 +25,6 @@ public class Hero extends AnimSprite implements IBoxCollidable {
     private final float TEXT_SIZE = 0.7f;
     private static final float HERO_WIDTH = 46 * 0.02f;
     private static final float HERO_HEIGHT = 42 * 0.02f;
-    private static final float SPEED = 5.0f;
     private static final float HERO_LEFT = HERO_WIDTH / 2 + 1.0f;
     private static final float HERO_RIGHT = Metrics.game_width - HERO_WIDTH / 2 - 1.0f;
     private static final float HERO_UP = HERO_HEIGHT / 2 + 1.5f;
@@ -35,12 +34,12 @@ public class Hero extends AnimSprite implements IBoxCollidable {
     private Gauge hpGauge = new Gauge(0.3f, R.color.hero_hpGauge_fg, R.color.hero_hpGauge_bg);
     private Gauge expGauge= new Gauge(0.3f, R.color.hero_expGauge_fg, R.color.hero_expGauge_bg);
     //Player Stats
+    private float speed = 5.0f;
     private float maxHp = 100;
     private float curHp = 100;
     private float maxExp = 100;
     private float curExp = 0;
-    private float power = 10;
-    private float speed = SPEED;
+    private int power = 10;
     private float defense = 10;
     private float cooltime = 0;
     private boolean animSide = false;
@@ -91,7 +90,7 @@ public class Hero extends AnimSprite implements IBoxCollidable {
         maxExp = 100;
         curExp = 0;
         power = 10;
-        speed = SPEED;
+        speed = 5.0f;
         defense = 10;
         cooltime = 0;
         dx = 0;
@@ -195,4 +194,7 @@ public class Hero extends AnimSprite implements IBoxCollidable {
 
     @Override
     public RectF getCollisionRect() {return collisionRect;}
+
+    public float getSpeed() {return speed;}
+    public int getPower() {return power;}
 }
