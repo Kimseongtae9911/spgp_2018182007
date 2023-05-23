@@ -1,6 +1,7 @@
 package com.example.termproject.MonsterSurvival.game.skill;
 
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
@@ -67,15 +68,25 @@ public class SkillMissile extends Skill implements IRecyclable, IBoxCollidable {
     }
     @Override
     public void update() {
+        MainScene scene = (MainScene) BaseScene.getTopScene();
+
         x += dx*(MISSILE_SPEED * BaseScene.frameTime);
         y += dy*(MISSILE_SPEED * BaseScene.frameTime);
+
+        x += (-scene.getPlayerSpeed() * scene.getPlayerMoveX() * BaseScene.frameTime);
+        y += (-scene.getPlayerSpeed() * scene.getPlayerMoveY() * BaseScene.frameTime);
+
         fixDstRect();
 
-        x += (-MainScene.getPlayerSpeed() * MainScene.getPlayerMoveX() * BaseScene.frameTime);
-        y += (-MainScene.getPlayerSpeed() * MainScene.getPlayerMoveY() * BaseScene.frameTime);
 
-        collisionRect.set(dstRect);
-        collisionRect.inset(0.11f, 0.11f);
+        float rotationAngle = (float) Math.toDegrees(Math.atan2(dy, dx));
+        RectF rotatedCollisionRect = new RectF(collisionRect);
+        Matrix matrix = new Matrix();
+        matrix.setRotate(rotationAngle, x, y);
+        matrix.mapRect(rotatedCollisionRect);
+        obb.set(x, y, MISSILE_WIDTH / 2, MISSILE_HIEGHT / 2, rotationAngle);
+
+        collisionRect.set(rotatedCollisionRect);
     }
 
     @Override

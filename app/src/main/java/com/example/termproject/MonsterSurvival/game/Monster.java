@@ -12,6 +12,7 @@ import com.example.termproject.MonsterSurvival.framework.Gauge;
 import com.example.termproject.MonsterSurvival.framework.IBoxCollidable;
 import com.example.termproject.MonsterSurvival.framework.IRecyclable;
 import com.example.termproject.MonsterSurvival.framework.Metrics;
+import com.example.termproject.MonsterSurvival.framework.OrientedBoundingBox;
 import com.example.termproject.MonsterSurvival.framework.RecycleBin;
 import com.example.termproject.R;
 
@@ -31,7 +32,7 @@ public class Monster extends AnimSprite implements IRecyclable, IBoxCollidable {
 
     private float dx =0;
     private float dy =0;
-    protected RectF collisionRect = new RectF();
+    protected OrientedBoundingBox obb = new OrientedBoundingBox();
     private int imageSize = 0;
     protected Rect[][] srcRects;
     protected Gauge gauge = new Gauge(0.3f, R.color.monster_gauge_fg, R.color.monster_gauge_bg);
@@ -95,7 +96,7 @@ public class Monster extends AnimSprite implements IRecyclable, IBoxCollidable {
             this.bitmap = BitmapPool.get(R.mipmap.monster1);
             this.power = level * power;
         }
-        this.hp = this.maxHp = (level + 1) * 10;
+        this.hp = this.maxHp = (level) * 10;
         Random r = new Random();
         int spawnSide = r.nextInt(4);
         switch (spawnSide) {
@@ -123,8 +124,9 @@ public class Monster extends AnimSprite implements IRecyclable, IBoxCollidable {
     public void update() {
         super.update();
 
-        float dx = MainScene.getPlayerX() - x;
-        float dy = MainScene.getPlayerY() - y;
+        MainScene scene = (MainScene) BaseScene.getTopScene();
+        float dx = scene.getPlayerX() - x;
+        float dy = scene.getPlayerY() - y;
         float dis = (float)Math.sqrt(dx*dx + dy*dy);
         if(dis > 0) {
             dx /= dis;
@@ -134,13 +136,12 @@ public class Monster extends AnimSprite implements IRecyclable, IBoxCollidable {
         x += SPEED * dx * BaseScene.frameTime;
         y += SPEED * dy * BaseScene.frameTime;
 
-        x += (-MainScene.getPlayerSpeed() * MainScene.getPlayerMoveX() * BaseScene.frameTime);
-        y += (-MainScene.getPlayerSpeed() * MainScene.getPlayerMoveY() * BaseScene.frameTime);
+        x += (-scene.getPlayerSpeed() * scene.getPlayerMoveX() * BaseScene.frameTime);
+        y += (-scene.getPlayerSpeed() * scene.getPlayerMoveY() * BaseScene.frameTime);
 
         fixDstRect();
 
-        collisionRect.set(dstRect);
-        collisionRect.inset(0.11f, 0.11f);
+        obb.set(x, y, MONSTER_WIDTH / 2, MONSTER_HEIGHT / 2, 0.f);
     }
 
     @Override
@@ -165,23 +166,20 @@ public class Monster extends AnimSprite implements IRecyclable, IBoxCollidable {
     }
 
     @Override
-    public RectF getCollisionRect() {
-        return collisionRect;
-    }
-
+    public OrientedBoundingBox getOBB() {return obb;}
     @Override
     public void onRecycle() {
     }
 
     public int getScore() {
-        return 10 * (level + 1);
+        return 10 * level;
     }
     public int getPower() {return power;}
     public float getX() {return x;}
     public float getY() {return y;}
+    public int getLevel() {return level;}
 
     public boolean decreaseLife(int power) {
-        Log.d(TAG, "HP: " + hp);
         hp -= power;
         if (hp <= 0) return true;
         return false;

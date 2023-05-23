@@ -7,11 +7,13 @@ import com.example.termproject.MonsterSurvival.framework.AnimSprite;
 import com.example.termproject.MonsterSurvival.framework.IBoxCollidable;
 import com.example.termproject.MonsterSurvival.framework.IRecyclable;
 import com.example.termproject.MonsterSurvival.framework.Metrics;
+import com.example.termproject.MonsterSurvival.framework.OrientedBoundingBox;
 import com.example.termproject.R;
 
 public class Skill extends AnimSprite implements IRecyclable, IBoxCollidable {
     protected int imageSize = 0;
     protected RectF collisionRect = new RectF();
+    protected OrientedBoundingBox obb = new OrientedBoundingBox();
     protected Rect[] srcRects;
     protected boolean active = false;
     protected int power = 0;
@@ -21,7 +23,7 @@ public class Skill extends AnimSprite implements IRecyclable, IBoxCollidable {
     }
 
     @Override
-    public RectF getCollisionRect() {return collisionRect;}
+    public OrientedBoundingBox getOBB() {return obb;}
     @Override
     public void onRecycle() {
     }

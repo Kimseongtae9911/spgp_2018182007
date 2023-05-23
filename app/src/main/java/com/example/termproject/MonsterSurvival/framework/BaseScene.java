@@ -93,7 +93,7 @@ public class BaseScene {
             for (ArrayList<IGameObject> objects: layers) {
                 for (IGameObject gobj : objects) {
                     if (gobj instanceof IBoxCollidable) {
-                        RectF rect = ((IBoxCollidable) gobj).getCollisionRect();
+                        RectF rect = ((IBoxCollidable) gobj).getOBB().getBoundingBox();
                         canvas.drawRect(rect, bboxPaint);
                     }
                 }

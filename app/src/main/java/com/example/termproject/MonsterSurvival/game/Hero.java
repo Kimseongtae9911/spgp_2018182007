@@ -15,9 +15,12 @@ import com.example.termproject.MonsterSurvival.framework.GameView;
 import com.example.termproject.MonsterSurvival.framework.Gauge;
 import com.example.termproject.MonsterSurvival.framework.IBoxCollidable;
 import com.example.termproject.MonsterSurvival.framework.Metrics;
+import com.example.termproject.MonsterSurvival.framework.OrientedBoundingBox;
 import com.example.termproject.R;
 
 public class Hero extends AnimSprite implements IBoxCollidable {
+
+    private static final String TAG = Hero.class.getSimpleName();
     private final Paint hpPaint;
     private final char[] hpText = {'H', 'P'};
     private final Paint expPaint;
@@ -37,8 +40,8 @@ public class Hero extends AnimSprite implements IBoxCollidable {
     private float speed = 5.0f;
     private float maxHp = 100;
     private float curHp = 100;
-    private float maxExp = 100;
-    private float curExp = 0;
+    private int maxExp = 100;
+    private int curExp = 0;
     private int power = 10;
     private float defense = 10;
     private float cooltime = 0;
@@ -49,7 +52,7 @@ public class Hero extends AnimSprite implements IBoxCollidable {
 
     private float moveX = 0;
     private float moveY = 0;
-    protected RectF collisionRect = new RectF();
+    private OrientedBoundingBox obb = new OrientedBoundingBox();
     public Hero() {
         super(R.mipmap.hero, Metrics.game_width /2, Metrics.game_height / 2, HERO_WIDTH, HERO_HEIGHT, 2, 10, 6);
         imageSize = bitmap.getWidth() / 6;
@@ -147,7 +150,8 @@ public class Hero extends AnimSprite implements IBoxCollidable {
         }
 
         fixDstRect();
-        collisionRect.set(dstRect);
+
+        obb.set(x, y, HERO_WIDTH / 2, HERO_HEIGHT / 2, 0.f);
     }
 
     @Override
@@ -193,8 +197,15 @@ public class Hero extends AnimSprite implements IBoxCollidable {
     }
 
     @Override
-    public RectF getCollisionRect() {return collisionRect;}
+    public OrientedBoundingBox getOBB() {return obb;}
 
     public float getSpeed() {return speed;}
     public int getPower() {return power;}
+    public void GainExp(int exp) {
+        curExp += exp;
+        if(curExp >= maxExp) {
+            curExp -= maxExp;
+            maxExp = (int)(maxExp * 1.2f);
+        }
+    }
 }

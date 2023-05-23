@@ -28,7 +28,7 @@ public class MainScene extends BaseScene {
     private ArrayList<IGameObject> nextRoundObject = new ArrayList<>();
     private boolean nextRound = false;
     private boolean pause = false;
-    private static final Hero hero = new Hero();
+    private final Hero hero = new Hero();
     private final InfiniteScrollBackground background;
     private Timer timer = new Timer();
     private JoyStick joyStick;
@@ -182,13 +182,14 @@ public class MainScene extends BaseScene {
         pauseObject.add(obj);
     }
     public void addNextRoundObject(IGameObject obj) {nextRoundObject.add(obj);}
-
+    public void addScore(int num) {score.addScore(num);}
     public GameView getView() {return view;}
-    public static float getPlayerX() {return hero.getX();}
-    public static float getPlayerY() {return hero.getY();}
+    public float getPlayerX() {return hero.getX();}
+    public float getPlayerY() {return hero.getY();}
 
-    public static float getPlayerMoveX() {return hero.getMoveX();}
-    public static float getPlayerMoveY() {return hero.getMoveY();}
-    public static float getPlayerSpeed() {return hero.getSpeed();}
-    public static int getPlayerPower() {return hero.getPower();}
+    public float getPlayerMoveX() {return hero.getMoveX();}
+    public float getPlayerMoveY() {return hero.getMoveY();}
+    public float getPlayerSpeed() {return hero.getSpeed();}
+    public int getPlayerPower() {return hero.getPower();}
+    public Hero getPlayer() {return hero;}
 }
