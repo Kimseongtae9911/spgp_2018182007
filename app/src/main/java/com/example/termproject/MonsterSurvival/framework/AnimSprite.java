@@ -14,17 +14,18 @@ public class AnimSprite extends Sprite {
     public AnimSprite(int bitmapResId, float cx, float cy, float width, float height, int heightFrame, float fps, int frameCount) {
         super(bitmapResId, cx, cy, width, height);
         this.fps = fps;
+        createdOn = System.currentTimeMillis();
         int imageWidth = bitmap.getWidth();
         frameHeight = bitmap.getHeight() / heightFrame;
-        if (frameCount == 0) {
+        if(frameCount == 0) {
             frameWidth = frameHeight;
             this.frameCount = imageWidth / frameHeight;
-        } else {
+        }
+        else {
             frameWidth = imageWidth / frameCount;
             this.frameCount = frameCount;
         }
         srcRect.set(0, 0, frameWidth, frameHeight);
-        createdOn = System.currentTimeMillis();
     }
 
     @Override
@@ -34,5 +35,21 @@ public class AnimSprite extends Sprite {
         int frameIndex = Math.round(time * fps) % frameCount;
         srcRect.set(frameIndex * frameWidth, 0, (frameIndex + 1) * frameWidth, frameHeight);
         canvas.drawBitmap(bitmap, srcRect, dstRect, null);
+    }
+
+    protected void setAnimationResource(int mipmapResId, float fps, int frameCount) {
+        bitmap = BitmapPool.get(mipmapResId);
+        this.fps = fps;
+        int imageWidth = bitmap.getWidth();
+        int imageHeight = bitmap.getHeight();
+        if (frameCount == 0) {
+            this.frameWidth = imageHeight;
+            this.frameHeight = imageHeight;
+            this.frameCount = imageWidth / imageHeight;
+        } else {
+            this.frameWidth = imageWidth / frameCount;
+            this.frameHeight = imageHeight;
+            this.frameCount = frameCount;
+        }
     }
 }

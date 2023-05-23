@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.util.Log;
@@ -29,7 +30,8 @@ public class Hero extends AnimSprite implements IBoxCollidable {
     private static final float HERO_RIGHT = Metrics.game_width - HERO_WIDTH / 2 - 1.0f;
     private static final float HERO_UP = HERO_HEIGHT / 2 + 1.5f;
     private static final float HERO_DOWN = Metrics.game_height- HERO_HEIGHT / 2 - 2.0f;
-
+    private int imageSize = 0;
+    protected Rect[][] srcRects;
     private Gauge hpGauge = new Gauge(0.3f, R.color.hero_hpGauge_fg, R.color.hero_hpGauge_bg);
     private Gauge expGauge= new Gauge(0.3f, R.color.hero_expGauge_fg, R.color.hero_expGauge_bg);
     //Player Stats
@@ -41,9 +43,8 @@ public class Hero extends AnimSprite implements IBoxCollidable {
     private float speed = SPEED;
     private float defense = 10;
     private float cooltime = 0;
-
+    private boolean animSide = false;
     //Player Stats
-
     private float dx = 0;
     private float dy = 0;
 
@@ -52,6 +53,9 @@ public class Hero extends AnimSprite implements IBoxCollidable {
     protected RectF collisionRect = new RectF();
     public Hero() {
         super(R.mipmap.hero, Metrics.game_width /2, Metrics.game_height / 2, HERO_WIDTH, HERO_HEIGHT, 2, 10, 6);
+        imageSize = bitmap.getWidth() / 6;
+        makeSourceRects();
+
         hpPaint = new Paint();
         hpPaint.setColor(Color.RED);
         hpPaint.setTextSize(TEXT_SIZE);
@@ -63,6 +67,24 @@ public class Hero extends AnimSprite implements IBoxCollidable {
         expPaint.setTypeface(Typeface.DEFAULT_BOLD);
     }
 
+    private void makeSourceRects() {
+        srcRects = new Rect[][] {
+                makeRects(0, 1, 2, 3, 4, 5),               // Right Idle
+                makeRects(100, 101, 102, 103, 104, 105),   // Right Move
+                makeRects(200, 201, 202, 203, 204, 205),   // Left Idle
+                makeRects(300, 301, 302, 303, 304, 305),   // Left Move
+        };
+    };
+    protected Rect[] makeRects(int... indices) {
+        Rect[] rects = new Rect[indices.length];
+        for (int i = 0; i < indices.length; i++) {
+            int idx = indices[i];
+            int l = (idx % 100) * (imageSize);
+            int t = (idx / 100) * (bitmap.getHeight() / 4);
+            rects[i] = new Rect(l, t + 2, l + imageSize, t + bitmap.getHeight() / 4 + 2);
+        }
+        return rects;
+    }
     public void reset() {
         maxHp = 100;
         curHp = 100;
@@ -93,6 +115,12 @@ public class Hero extends AnimSprite implements IBoxCollidable {
 
         float time = BaseScene.frameTime;
 
+        if(dx < 0) {
+            animSide = false;
+        }
+        else if(dx > 0) {
+            animSide = true;
+        }
         x += dx * speed * time;
         y += dy * speed * time;
 
@@ -125,7 +153,23 @@ public class Hero extends AnimSprite implements IBoxCollidable {
 
     @Override
     public void draw(Canvas canvas) {
-        super.draw(canvas);
+        long now = System.currentTimeMillis();
+        float time = (now - createdOn) / 1000.0f;
+        int index = 0;
+        if(dx == 0) {
+            if(animSide)
+                index = 0;
+            else
+                index = 2;
+        }
+        else if(dx > 0)
+            index = 1;
+        else if(dx < 0)
+            index = 3;
+
+        Rect[] rects = srcRects[index];
+        int frameIndex = Math.round(time * fps) % rects.length;
+        canvas.drawBitmap(bitmap, rects[frameIndex], dstRect, null);
 
         for(int i = 0; i < 2; ++i) {
             canvas.drawText(String.valueOf(hpText[i]), 0.35f + 0.6f * i, Metrics.game_height - 1.25f, hpPaint);

@@ -1,6 +1,7 @@
 package com.example.termproject.MonsterSurvival.game;
 
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.graphics.RectF;
 
 import com.example.termproject.MonsterSurvival.framework.AnimSprite;
@@ -24,11 +25,13 @@ public class Monster extends AnimSprite implements IRecyclable, IBoxCollidable {
 
     private int level;
     protected int hp, maxHp;
+    protected int power = 5;
 
     private float dx =0;
     private float dy =0;
     protected RectF collisionRect = new RectF();
-
+    private int imageSize = 0;
+    protected Rect[][] srcRects;
     protected Gauge gauge = new Gauge(0.3f, R.color.monster_gauge_fg, R.color.monster_gauge_bg);
 
     static Monster get(int index, int level) {
@@ -61,15 +64,34 @@ public class Monster extends AnimSprite implements IRecyclable, IBoxCollidable {
         return new Monster(index, level);
     }
     private Monster(int index, int level) {
-        super(R.mipmap.monster1, (Metrics.game_width / 10) * (2 * index + 1), -SIZE/2, MONSTER_WIDTH, MONSTER_HEIGHT, 1, 0, 10);
+        super(R.mipmap.monster1, (Metrics.game_width / 10) * (2 * index + 1), -SIZE/2, MONSTER_WIDTH, MONSTER_HEIGHT, 2, 10, 8);
+        imageSize = bitmap.getWidth() / 8;
+        makeSourceRects();
         this.level = level;
         init(level);
     }
 
+    private void makeSourceRects() {
+        srcRects = new Rect[][] {
+                makeRects(0, 1, 2, 3, 4, 5, 6, 7),                  // Right Move
+                makeRects(100, 101, 102, 103, 104, 105, 106, 107)   // Left Move
+        };
+    };
+    protected Rect[] makeRects(int... indices) {
+        Rect[] rects = new Rect[indices.length];
+        for (int i = 0; i < indices.length; i++) {
+            int idx = indices[i];
+            int l = (idx % 100) * (imageSize);
+            int t = (idx / 100) * (bitmap.getHeight() / 2);
+            rects[i] = new Rect(l, t + 2, l + imageSize, t + bitmap.getHeight() / 2 + 2);
+        }
+        return rects;
+    }
     private void init(int level) {
         if (level != this.level) {
             this.level = level;
             this.bitmap = BitmapPool.get(R.mipmap.monster1);
+            this.power = level * power;
         }
         this.hp = this.maxHp = (level + 1) * 10;
         Random r = new Random();
@@ -121,7 +143,16 @@ public class Monster extends AnimSprite implements IRecyclable, IBoxCollidable {
 
     @Override
     public void draw(Canvas canvas) {
-        super.draw(canvas);
+        long now = System.currentTimeMillis();
+        float time = (now - createdOn) / 1000.0f;
+        int index = 0;
+        if(dx >= 0)
+            index = 0;
+        else
+            index = 1;
+        Rect[] rects = srcRects[index];
+        int frameIndex = Math.round(time * fps) % rects.length;
+        canvas.drawBitmap(bitmap, rects[frameIndex], dstRect, null);
 
         canvas.save();
         float width = dstRect.width() * 0.75f;
@@ -143,6 +174,7 @@ public class Monster extends AnimSprite implements IRecyclable, IBoxCollidable {
     public int getScore() {
         return 10 * (level + 1);
     }
+    public int getPower() {return power;}
 
     public boolean decreaseLife(int power) {
         hp -= power;

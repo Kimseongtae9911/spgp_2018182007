@@ -43,8 +43,7 @@ public class CollisionChecker implements IGameObject {
             Monster monster = (Monster) monsters.get(ei);
             Hero player = (Hero)players.get(0);
             if (collides(monster, player)) {
-                Log.d(TAG, "Decrease Player HP");
-                player.decreaseHp(10);
+                player.decreaseHp(monster.getPower());
                 if(!(shakeAnimation.hasStarted() && !shakeAnimation.hasEnded()))
                     scene.getView().startAnimation(shakeAnimation);
                 break;
