@@ -12,6 +12,7 @@ import com.example.termproject.MonsterSurvival.framework.util.OrientedBoundingBo
 import com.example.termproject.MonsterSurvival.framework.util.Vector2;
 import com.example.termproject.MonsterSurvival.game.monster.Monster;
 import com.example.termproject.MonsterSurvival.game.skill.Skill;
+import com.example.termproject.MonsterSurvival.game.skill.SkillCircle;
 import com.example.termproject.MonsterSurvival.game.skill.SkillFireBall;
 import com.example.termproject.MonsterSurvival.game.skill.SkillMissile;
 
@@ -126,6 +127,13 @@ public class CollisionChecker implements IGameObject {
                             break;
                         }
                         fireball.collision = false;
+                    }
+                    else if(skill instanceof SkillCircle) {
+                        SkillCircle circle = (SkillCircle)skill;
+                        if(!circle.collision) {
+                            break;
+                        }
+                        circle.collision = false;
                     }
                     boolean remove = monster.decreaseLife(skill.getPower());
                     if(remove) {

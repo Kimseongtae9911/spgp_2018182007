@@ -153,7 +153,7 @@ public class Hero extends AnimSprite implements IBoxCollidable {
 
         if(invincible) {
             invincibleTime += BaseScene.frameTime;
-            if(invincibleTime >= 0.3f) {
+            if(invincibleTime >= 0.1f) {
                 invincible = false;
                 invincibleTime = 0.f;
             }

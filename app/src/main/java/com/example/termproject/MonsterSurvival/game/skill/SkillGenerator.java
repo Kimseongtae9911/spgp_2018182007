@@ -10,7 +10,7 @@ import com.example.termproject.MonsterSurvival.game.monster.Monster;
 import java.util.ArrayList;
 
 public class SkillGenerator implements IGameObject {
-    private float[] SKILL_GEN_INTERVAL = {3.0f, 5.0f, 9.0f, 9.0f, 9.0f, 20.0f};
+    private float[] SKILL_GEN_INTERVAL = {3.0f, 5.0f, 3.0f, 9.0f, 9.0f, 20.0f};
     private static final String TAG = Monster.class.getSimpleName();
     private float[] times = {0.f, 0.f, 0.f, 0.f, 0.f, 0.f};
     private float difficultyTime = 0;
@@ -41,6 +41,7 @@ public class SkillGenerator implements IGameObject {
                 generateFireBall(scene);
                 break;
             case 2:
+                generateCircle(scene);
                 break;
             case 3:
                 break;
@@ -99,7 +100,9 @@ public class SkillGenerator implements IGameObject {
 
         scene.add(MainScene.Layer.skill, SkillFireBall.get(scene.getPlayerX(), scene.getPlayerY(), dx, dy, scene.getPlayerPower()));
     }
-
+    private void generateCircle(MainScene scene) {
+        scene.add(MainScene.Layer.skill, SkillCircle.get(scene.getPlayerX(), scene.getPlayerY(), scene.getPlayerPower()));
+    }
     private void generateThunder(MainScene scene) {
         double angle = Math.random() * 2 * Math.PI;
 
