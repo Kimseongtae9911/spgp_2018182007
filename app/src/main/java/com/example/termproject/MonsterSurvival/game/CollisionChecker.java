@@ -88,22 +88,28 @@ public class CollisionChecker implements IGameObject {
         ArrayList<IGameObject> monsters = scene.getObjectsAt(MainScene.Layer.monster);
         ArrayList<IGameObject> players = scene.getObjectsAt(MainScene.Layer.player);
         ArrayList<IGameObject> skills = scene.getObjectsAt(MainScene.Layer.skill);
+        Hero player = (Hero)players.get(0);
 
-        for (int ei = monsters.size() - 1; ei >= 0; ei--) {
-            Monster monster = (Monster) monsters.get(ei);
-            Hero player = (Hero)players.get(0);
-            if (collideOBB(monster, player)) {
-                if(player.getBarrier()) {
-                    player.setBarrier(false);
+        //Monster - Player
+        if(!player.invincible) {
+            for (int ei = monsters.size() - 1; ei >= 0; ei--) {
+                Monster monster = (Monster) monsters.get(ei);
+
+                if (collideOBB(monster, player)) {
+                    player.invincible = true;
+                    if (player.getBarrier()) {
+                        player.setBarrier(false);
+                        break;
+                    }
+                    player.decreaseHp(monster.getPower());
+                    if (!(shakeAnimation.hasStarted() && !shakeAnimation.hasEnded()))
+                        scene.getView().startAnimation(shakeAnimation);
                     break;
                 }
-                player.decreaseHp(monster.getPower());
-                if(!(shakeAnimation.hasStarted() && !shakeAnimation.hasEnded()))
-                    scene.getView().startAnimation(shakeAnimation);
-                break;
             }
         }
 
+        //Skill - Monster
         for (int ei = monsters.size() - 1; ei >= 0; ei--) {
             Monster monster = (Monster) monsters.get(ei);
             for(int si = skills.size() - 1; si >= 0; si--) {

@@ -29,6 +29,8 @@ public class Hero extends AnimSprite implements IBoxCollidable {
     private static final float HERO_UP = HERO_HEIGHT / 2 + 1.5f;
     private static final float HERO_DOWN = Metrics.game_height- HERO_HEIGHT / 2 - 2.0f;
     private boolean barrier = false;
+    public boolean invincible = false;
+    private float invincibleTime = 0.f;
     private int imageSize = 0;
     protected Rect[][] srcRects;
     private Gauge hpGauge = new Gauge(0.3f, R.color.hero_hpGauge_fg, R.color.hero_hpGauge_bg);
@@ -100,6 +102,8 @@ public class Hero extends AnimSprite implements IBoxCollidable {
         moveY = 0;
         x = Metrics.game_width / 2;
         y = Metrics.game_height / 2;
+        invincibleTime = 0.f;
+        invincible = false;
     }
     public void setDir(float dx, float dy) {this.dx= dx; this.dy =dy;}
 
@@ -147,6 +151,14 @@ public class Hero extends AnimSprite implements IBoxCollidable {
             moveY = 0;
         }
 
+        if(invincible) {
+            invincibleTime += BaseScene.frameTime;
+            if(invincibleTime >= 0.3f) {
+                invincible = false;
+                invincibleTime = 0.f;
+            }
+
+        }
         fixDstRect();
 
         obb.set(x, y, HERO_WIDTH / 2, HERO_HEIGHT / 2, 0.f);
