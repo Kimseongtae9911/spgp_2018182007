@@ -38,16 +38,17 @@ public class SkillGenerator implements IGameObject {
                 generateMissile(scene);
                 break;
             case 1:
+                generateFireBall(scene);
                 break;
             case 2:
                 break;
             case 3:
                 break;
             case 4:
-                generateThunder();
+                generateThunder(scene);
                 break;
             case 5:
-                generateBarrier();
+                generateBarrier(scene);
                 break;
             default:
                 break;
@@ -85,10 +86,21 @@ public class SkillGenerator implements IGameObject {
 
         scene.add(MainScene.Layer.skill, SkillMissile.get(x, y, dirX, dirY, scene.getPlayerPower()));
     }
+    private void generateFireBall(MainScene scene) {
+        double angle = Math.random() * 2 * Math.PI;
 
-    private void generateThunder() {
-        MainScene scene = (MainScene) BaseScene.getTopScene();
+        float dx = (float) Math.cos(angle);
+        float dy = (float) Math.sin(angle);
+        float magnitude = (float)Math.sqrt(dx * dx + dy * dy);
+        if (magnitude != 0) {
+            dx /= magnitude;
+            dy /= magnitude;
+        }
 
+        scene.add(MainScene.Layer.skill, SkillFireBall.get(scene.getPlayerX(), scene.getPlayerY(), dx, dy, scene.getPlayerPower()));
+    }
+
+    private void generateThunder(MainScene scene) {
         double angle = Math.random() * 2 * Math.PI;
 
         float dx = (float) Math.cos(angle);
@@ -102,8 +114,7 @@ public class SkillGenerator implements IGameObject {
         scene.add(MainScene.Layer.skill, SkillThunder.get(scene.getPlayerX(), scene.getPlayerY(), dx, dy, scene.getPlayerPower()));
     }
 
-    private void generateBarrier() {
-        MainScene scene = (MainScene) BaseScene.getTopScene();
+    private void generateBarrier(MainScene scene) {
         scene.add(MainScene.Layer.skill, SkillBarrier.get(scene.getPlayerX(), scene.getPlayerY()));
     }
 
