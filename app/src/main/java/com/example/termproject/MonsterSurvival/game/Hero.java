@@ -1,21 +1,17 @@
 package com.example.termproject.MonsterSurvival.game;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.Typeface;
-import android.util.Log;
 
-import com.example.termproject.MonsterSurvival.framework.AnimSprite;
+import com.example.termproject.MonsterSurvival.framework.objects.AnimSprite;
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
-import com.example.termproject.MonsterSurvival.framework.GameView;
-import com.example.termproject.MonsterSurvival.framework.Gauge;
-import com.example.termproject.MonsterSurvival.framework.IBoxCollidable;
-import com.example.termproject.MonsterSurvival.framework.Metrics;
-import com.example.termproject.MonsterSurvival.framework.OrientedBoundingBox;
+import com.example.termproject.MonsterSurvival.framework.objects.Gauge;
+import com.example.termproject.MonsterSurvival.framework.interfaces.IBoxCollidable;
+import com.example.termproject.MonsterSurvival.framework.util.Metrics;
+import com.example.termproject.MonsterSurvival.framework.util.OrientedBoundingBox;
 import com.example.termproject.R;
 
 public class Hero extends AnimSprite implements IBoxCollidable {
@@ -32,6 +28,7 @@ public class Hero extends AnimSprite implements IBoxCollidable {
     private static final float HERO_RIGHT = Metrics.game_width - HERO_WIDTH / 2 - 1.0f;
     private static final float HERO_UP = HERO_HEIGHT / 2 + 1.5f;
     private static final float HERO_DOWN = Metrics.game_height- HERO_HEIGHT / 2 - 2.0f;
+    private boolean barrier = false;
     private int imageSize = 0;
     protected Rect[][] srcRects;
     private Gauge hpGauge = new Gauge(0.3f, R.color.hero_hpGauge_fg, R.color.hero_hpGauge_bg);
@@ -88,6 +85,7 @@ public class Hero extends AnimSprite implements IBoxCollidable {
         return rects;
     }
     public void reset() {
+        barrier = false;
         maxHp = 100;
         curHp = 100;
         maxExp = 100;
@@ -198,6 +196,11 @@ public class Hero extends AnimSprite implements IBoxCollidable {
 
     @Override
     public OrientedBoundingBox getOBB() {return obb;}
+
+    public void setBarrier(boolean barrier) {
+        this.barrier = barrier;
+    }
+    public boolean getBarrier() {return barrier;}
 
     public float getSpeed() {return speed;}
     public int getPower() {return power;}

@@ -1,8 +1,9 @@
-package com.example.termproject.MonsterSurvival.framework;
+package com.example.termproject.MonsterSurvival.framework.objects;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.util.Log;
+
+import com.example.termproject.MonsterSurvival.framework.BitmapPool;
 
 public class AnimSprite extends Sprite {
     private static final String TAG = AnimSprite.class.getSimpleName();

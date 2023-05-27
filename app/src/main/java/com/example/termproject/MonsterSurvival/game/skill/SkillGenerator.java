@@ -3,15 +3,14 @@ package com.example.termproject.MonsterSurvival.game.skill;
 import android.graphics.Canvas;
 
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
-import com.example.termproject.MonsterSurvival.framework.IGameObject;
-import com.example.termproject.MonsterSurvival.game.Hero;
+import com.example.termproject.MonsterSurvival.framework.interfaces.IGameObject;
 import com.example.termproject.MonsterSurvival.game.MainScene;
-import com.example.termproject.MonsterSurvival.game.Monster;
+import com.example.termproject.MonsterSurvival.game.monster.Monster;
 
 import java.util.ArrayList;
 
 public class SkillGenerator implements IGameObject {
-    private float[] SKILL_GEN_INTERVAL = {3.0f, 5.0f, 9.0f, 9.0f, 20.0f, 15.0f};
+    private float[] SKILL_GEN_INTERVAL = {3.0f, 5.0f, 9.0f, 9.0f, 9.0f, 20.0f};
     private static final String TAG = Monster.class.getSimpleName();
     private float[] times = {0.f, 0.f, 0.f, 0.f, 0.f, 0.f};
     private float difficultyTime = 0;
@@ -27,6 +26,9 @@ public class SkillGenerator implements IGameObject {
         }
         difficultyTime += BaseScene.frameTime;
 
+        if(((MainScene)BaseScene.getTopScene()).getPlayer().getBarrier()) {
+            times[5] -= BaseScene.frameTime;
+        }
     }
 
     private void generate(int num) {
@@ -42,8 +44,10 @@ public class SkillGenerator implements IGameObject {
             case 3:
                 break;
             case 4:
+                generateThunder();
                 break;
             case 5:
+                generateBarrier();
                 break;
             default:
                 break;
@@ -80,6 +84,27 @@ public class SkillGenerator implements IGameObject {
         }
 
         scene.add(MainScene.Layer.skill, SkillMissile.get(x, y, dirX, dirY, scene.getPlayerPower()));
+    }
+
+    private void generateThunder() {
+        MainScene scene = (MainScene) BaseScene.getTopScene();
+
+        double angle = Math.random() * 2 * Math.PI;
+
+        float dx = (float) Math.cos(angle);
+        float dy = (float) Math.sin(angle);
+        float magnitude = (float)Math.sqrt(dx * dx + dy * dy);
+        if (magnitude != 0) {
+            dx /= magnitude;
+            dy /= magnitude;
+        }
+
+        scene.add(MainScene.Layer.skill, SkillThunder.get(scene.getPlayerX(), scene.getPlayerY(), dx, dy, scene.getPlayerPower()));
+    }
+
+    private void generateBarrier() {
+        MainScene scene = (MainScene) BaseScene.getTopScene();
+        scene.add(MainScene.Layer.skill, SkillBarrier.get(scene.getPlayerX(), scene.getPlayerY()));
     }
 
     @Override

@@ -1,8 +1,11 @@
-package com.example.termproject.MonsterSurvival.framework;
+package com.example.termproject.MonsterSurvival.framework.objects;
 
 import android.view.MotionEvent;
 
-public class Button extends Sprite implements ITouchable{
+import com.example.termproject.MonsterSurvival.framework.util.Metrics;
+import com.example.termproject.MonsterSurvival.framework.interfaces.ITouchable;
+
+public class Button extends Sprite implements ITouchable {
     private final Callback callback;
 
     public enum Action {

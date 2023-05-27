@@ -1,9 +1,12 @@
-package com.example.termproject.MonsterSurvival.framework;
+package com.example.termproject.MonsterSurvival.framework.objects;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.RectF;
 import android.util.Log;
+
+import com.example.termproject.MonsterSurvival.framework.BitmapPool;
+import com.example.termproject.MonsterSurvival.framework.interfaces.IGameObject;
 
 public class Sprite implements IGameObject {
     private static final String TAG = Sprite.class.getSimpleName();

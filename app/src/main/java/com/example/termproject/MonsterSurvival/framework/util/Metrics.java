@@ -1,4 +1,4 @@
-package com.example.termproject.MonsterSurvival.framework;
+package com.example.termproject.MonsterSurvival.framework.util;
 
 public class Metrics {
     public static float scale = 1.0f;

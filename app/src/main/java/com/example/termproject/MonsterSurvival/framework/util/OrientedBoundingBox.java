@@ -1,4 +1,4 @@
-package com.example.termproject.MonsterSurvival.framework;
+package com.example.termproject.MonsterSurvival.framework.util;
 
 import android.graphics.RectF;
 

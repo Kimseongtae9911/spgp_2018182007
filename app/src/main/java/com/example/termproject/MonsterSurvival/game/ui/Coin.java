@@ -1,4 +1,4 @@
-package com.example.termproject.MonsterSurvival.game;
+package com.example.termproject.MonsterSurvival.game.ui;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -8,7 +8,7 @@ import android.graphics.Typeface;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.example.termproject.MonsterSurvival.framework.GameView;
-import com.example.termproject.MonsterSurvival.framework.Sprite;
+import com.example.termproject.MonsterSurvival.framework.objects.Sprite;
 import com.example.termproject.R;
 
 public class Coin extends Sprite {

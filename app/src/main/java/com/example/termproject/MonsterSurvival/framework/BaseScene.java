@@ -8,8 +8,10 @@ import android.os.Handler;
 import android.view.MotionEvent;
 
 import com.example.termproject.MonsterSurvival.BuildConfig;
+import com.example.termproject.MonsterSurvival.framework.interfaces.IBoxCollidable;
+import com.example.termproject.MonsterSurvival.framework.interfaces.IGameObject;
+import com.example.termproject.MonsterSurvival.framework.interfaces.IRecyclable;
 
-import java.sql.Array;
 import java.util.ArrayList;
 
 public class BaseScene {

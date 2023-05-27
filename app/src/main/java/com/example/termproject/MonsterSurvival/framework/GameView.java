@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.example.termproject.MonsterSurvival.BuildConfig;
+import com.example.termproject.MonsterSurvival.framework.util.Metrics;
 
 /**
  * TODO: document your custom view class.

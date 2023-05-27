@@ -1,18 +1,16 @@
 package com.example.termproject.MonsterSurvival.game;
 
 import android.graphics.Canvas;
-import android.graphics.RectF;
-import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
 
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
-import com.example.termproject.MonsterSurvival.framework.IBoxCollidable;
-import com.example.termproject.MonsterSurvival.framework.IGameObject;
-import com.example.termproject.MonsterSurvival.framework.OrientedBoundingBox;
-import com.example.termproject.MonsterSurvival.framework.RecycleBin;
-import com.example.termproject.MonsterSurvival.framework.Vector2;
+import com.example.termproject.MonsterSurvival.framework.interfaces.IBoxCollidable;
+import com.example.termproject.MonsterSurvival.framework.interfaces.IGameObject;
+import com.example.termproject.MonsterSurvival.framework.util.OrientedBoundingBox;
+import com.example.termproject.MonsterSurvival.framework.util.Vector2;
+import com.example.termproject.MonsterSurvival.game.monster.Monster;
 import com.example.termproject.MonsterSurvival.game.skill.Skill;
 import com.example.termproject.MonsterSurvival.game.skill.SkillMissile;
 
@@ -95,6 +93,10 @@ public class CollisionChecker implements IGameObject {
             Monster monster = (Monster) monsters.get(ei);
             Hero player = (Hero)players.get(0);
             if (collideOBB(monster, player)) {
+                if(player.getBarrier()) {
+                    player.setBarrier(false);
+                    break;
+                }
                 player.decreaseHp(monster.getPower());
                 if(!(shakeAnimation.hasStarted() && !shakeAnimation.hasEnded()))
                     scene.getView().startAnimation(shakeAnimation);
@@ -107,9 +109,10 @@ public class CollisionChecker implements IGameObject {
             for(int si = skills.size() - 1; si >= 0; si--) {
                 Skill skill = (Skill) skills.get(si);
                 if(collideOBB(monster, skill) && skill.getActive()) {
-                    if (skill instanceof SkillMissile)
+                    if (skill instanceof SkillMissile) {
                         skill.setActive(false);
-                    scene.remove(skill);
+                        scene.remove(skill);
+                    }
                     boolean remove = monster.decreaseLife(skill.getPower());
                     if(remove) {
                         scene.remove(monster);

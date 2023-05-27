@@ -1,22 +1,17 @@
-package com.example.termproject.MonsterSurvival.game;
+package com.example.termproject.MonsterSurvival.game.ui;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.media.MediaTimestamp;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
 
-import androidx.annotation.NonNull;
-
-import com.example.termproject.MonsterSurvival.framework.IGameObject;
-import com.example.termproject.MonsterSurvival.framework.ITouchable;
-import com.example.termproject.MonsterSurvival.framework.Metrics;
+import com.example.termproject.MonsterSurvival.framework.interfaces.IGameObject;
+import com.example.termproject.MonsterSurvival.framework.interfaces.ITouchable;
+import com.example.termproject.MonsterSurvival.framework.util.Metrics;
 
 public class JoyStick extends SurfaceView implements SurfaceHolder.Callback, IGameObject, ITouchable {
     private static final String TAG = JoyStick.class.getSimpleName();

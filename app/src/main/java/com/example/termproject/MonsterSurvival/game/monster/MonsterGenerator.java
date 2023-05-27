@@ -1,12 +1,10 @@
-package com.example.termproject.MonsterSurvival.game;
+package com.example.termproject.MonsterSurvival.game.monster;
 
 import android.graphics.Canvas;
-import android.util.Log;
 
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
-import com.example.termproject.MonsterSurvival.framework.IGameObject;
-
-import java.util.Random;
+import com.example.termproject.MonsterSurvival.framework.interfaces.IGameObject;
+import com.example.termproject.MonsterSurvival.game.MainScene;
 
 public class MonsterGenerator implements IGameObject {
     private static final float GEN_INTERVAL = 5.0f;

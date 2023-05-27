@@ -3,16 +3,13 @@ package com.example.termproject.MonsterSurvival.game.skill;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-import com.example.termproject.MonsterSurvival.framework.AnimSprite;
-import com.example.termproject.MonsterSurvival.framework.IBoxCollidable;
-import com.example.termproject.MonsterSurvival.framework.IRecyclable;
-import com.example.termproject.MonsterSurvival.framework.Metrics;
-import com.example.termproject.MonsterSurvival.framework.OrientedBoundingBox;
-import com.example.termproject.R;
+import com.example.termproject.MonsterSurvival.framework.objects.AnimSprite;
+import com.example.termproject.MonsterSurvival.framework.interfaces.IBoxCollidable;
+import com.example.termproject.MonsterSurvival.framework.interfaces.IRecyclable;
+import com.example.termproject.MonsterSurvival.framework.util.OrientedBoundingBox;
 
 public class Skill extends AnimSprite implements IRecyclable, IBoxCollidable {
     protected int imageSize = 0;
-    protected RectF collisionRect = new RectF();
     protected OrientedBoundingBox obb = new OrientedBoundingBox();
     protected Rect[] srcRects;
     protected boolean active = false;

@@ -7,8 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
-import com.example.termproject.MonsterSurvival.framework.Metrics;
-import com.example.termproject.R;
+import com.example.termproject.MonsterSurvival.framework.util.Metrics;
 import com.example.termproject.databinding.ActivityTitleBinding;
 
 public class TitleActivity extends AppCompatActivity {

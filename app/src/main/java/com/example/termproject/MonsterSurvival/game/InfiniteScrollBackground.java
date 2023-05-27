@@ -3,8 +3,8 @@ package com.example.termproject.MonsterSurvival.game;
 import android.graphics.Canvas;
 
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
-import com.example.termproject.MonsterSurvival.framework.Metrics;
-import com.example.termproject.MonsterSurvival.framework.Sprite;
+import com.example.termproject.MonsterSurvival.framework.util.Metrics;
+import com.example.termproject.MonsterSurvival.framework.objects.Sprite;
 
 public class InfiniteScrollBackground extends Sprite {
     private static final float SPEED = 10.0f;

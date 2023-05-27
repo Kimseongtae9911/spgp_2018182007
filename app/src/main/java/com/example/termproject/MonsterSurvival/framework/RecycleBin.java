@@ -2,6 +2,8 @@ package com.example.termproject.MonsterSurvival.framework;
 
 import android.util.Log;
 
+import com.example.termproject.MonsterSurvival.framework.interfaces.IRecyclable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 

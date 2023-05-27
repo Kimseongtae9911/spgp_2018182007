@@ -1,19 +1,18 @@
-package com.example.termproject.MonsterSurvival.game;
+package com.example.termproject.MonsterSurvival.game.monster;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.graphics.RectF;
-import android.util.Log;
 
-import com.example.termproject.MonsterSurvival.framework.AnimSprite;
+import com.example.termproject.MonsterSurvival.framework.objects.AnimSprite;
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
 import com.example.termproject.MonsterSurvival.framework.BitmapPool;
-import com.example.termproject.MonsterSurvival.framework.Gauge;
-import com.example.termproject.MonsterSurvival.framework.IBoxCollidable;
-import com.example.termproject.MonsterSurvival.framework.IRecyclable;
-import com.example.termproject.MonsterSurvival.framework.Metrics;
-import com.example.termproject.MonsterSurvival.framework.OrientedBoundingBox;
+import com.example.termproject.MonsterSurvival.framework.objects.Gauge;
+import com.example.termproject.MonsterSurvival.framework.interfaces.IBoxCollidable;
+import com.example.termproject.MonsterSurvival.framework.interfaces.IRecyclable;
+import com.example.termproject.MonsterSurvival.framework.util.Metrics;
+import com.example.termproject.MonsterSurvival.framework.util.OrientedBoundingBox;
 import com.example.termproject.MonsterSurvival.framework.RecycleBin;
+import com.example.termproject.MonsterSurvival.game.MainScene;
 import com.example.termproject.R;
 
 import java.util.Random;

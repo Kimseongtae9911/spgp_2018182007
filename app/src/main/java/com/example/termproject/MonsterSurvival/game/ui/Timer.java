@@ -1,17 +1,13 @@
-package com.example.termproject.MonsterSurvival.game;
+package com.example.termproject.MonsterSurvival.game.ui;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 
-import com.example.termproject.MonsterSurvival.BuildConfig;
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
-import com.example.termproject.MonsterSurvival.framework.IGameObject;
-import com.example.termproject.MonsterSurvival.framework.Metrics;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.termproject.MonsterSurvival.framework.interfaces.IGameObject;
+import com.example.termproject.MonsterSurvival.framework.util.Metrics;
 
 public class Timer implements IGameObject {
     private float time = 0.f;

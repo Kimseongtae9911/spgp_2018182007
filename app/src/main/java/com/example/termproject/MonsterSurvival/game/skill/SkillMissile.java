@@ -5,17 +5,13 @@ import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-import com.example.termproject.MonsterSurvival.framework.AnimSprite;
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
-import com.example.termproject.MonsterSurvival.framework.IBoxCollidable;
-import com.example.termproject.MonsterSurvival.framework.IRecyclable;
-import com.example.termproject.MonsterSurvival.framework.Metrics;
+import com.example.termproject.MonsterSurvival.framework.interfaces.IBoxCollidable;
+import com.example.termproject.MonsterSurvival.framework.interfaces.IRecyclable;
+import com.example.termproject.MonsterSurvival.framework.util.Metrics;
 import com.example.termproject.MonsterSurvival.framework.RecycleBin;
 import com.example.termproject.MonsterSurvival.game.MainScene;
-import com.example.termproject.MonsterSurvival.game.Monster;
 import com.example.termproject.R;
-
-import java.util.Random;
 
 public class SkillMissile extends Skill implements IRecyclable, IBoxCollidable {
     static final float MISSILE_WIDTH = 2.f;
@@ -80,13 +76,8 @@ public class SkillMissile extends Skill implements IRecyclable, IBoxCollidable {
 
 
         float rotationAngle = (float) Math.toDegrees(Math.atan2(dy, dx));
-        RectF rotatedCollisionRect = new RectF(collisionRect);
-        Matrix matrix = new Matrix();
-        matrix.setRotate(rotationAngle, x, y);
-        matrix.mapRect(rotatedCollisionRect);
         obb.set(x, y, MISSILE_WIDTH / 2, MISSILE_HIEGHT / 2, rotationAngle);
 
-        collisionRect.set(rotatedCollisionRect);
     }
 
     @Override

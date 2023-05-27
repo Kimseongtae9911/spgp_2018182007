@@ -1,9 +1,11 @@
-package com.example.termproject.MonsterSurvival.framework;
+package com.example.termproject.MonsterSurvival.framework.objects;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import androidx.core.content.res.ResourcesCompat;
+
+import com.example.termproject.MonsterSurvival.framework.GameView;
 
 public class Gauge {
     private Paint fgPaint = new Paint();

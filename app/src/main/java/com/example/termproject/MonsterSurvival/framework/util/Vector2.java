@@ -1,4 +1,4 @@
-package com.example.termproject.MonsterSurvival.framework;
+package com.example.termproject.MonsterSurvival.framework.util;
 
 public class Vector2 {
     public float x;

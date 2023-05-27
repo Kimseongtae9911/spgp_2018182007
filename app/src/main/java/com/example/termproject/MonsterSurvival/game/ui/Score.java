@@ -1,12 +1,12 @@
-package com.example.termproject.MonsterSurvival.game;
+package com.example.termproject.MonsterSurvival.game.ui;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 
-import com.example.termproject.MonsterSurvival.framework.Metrics;
-import com.example.termproject.MonsterSurvival.framework.Sprite;
+import com.example.termproject.MonsterSurvival.framework.util.Metrics;
+import com.example.termproject.MonsterSurvival.framework.objects.Sprite;
 import com.example.termproject.R;
 
 public class Score extends Sprite {
