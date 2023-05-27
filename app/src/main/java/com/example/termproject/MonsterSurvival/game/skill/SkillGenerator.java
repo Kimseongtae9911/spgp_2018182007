@@ -44,6 +44,7 @@ public class SkillGenerator implements IGameObject {
                 generateCircle(scene);
                 break;
             case 3:
+                generateFlyFire(scene);
                 break;
             case 4:
                 generateThunder(scene);
@@ -102,6 +103,22 @@ public class SkillGenerator implements IGameObject {
     }
     private void generateCircle(MainScene scene) {
         scene.add(MainScene.Layer.skill, SkillCircle.get(scene.getPlayerX(), scene.getPlayerY(), scene.getPlayerPower()));
+    }
+    private void generateFlyFire(MainScene scene) {
+        float playerX = scene.getPlayerX();
+        float playerY = scene.getPlayerY();
+
+        float distance = 2.0f;
+
+        for (int i = 0; i < 4; i++) {
+            float angle = (float) (Math.random() * 2 * Math.PI);
+            float offsetX = (float) (Math.cos(angle) * distance);
+            float offsetY = (float) (Math.sin(angle) * distance);
+            float fireX = playerX + offsetX;
+            float fireY = playerY + offsetY;
+
+            scene.add(MainScene.Layer.skill, SkillFlyFire.get(fireX, fireY, scene.getPlayerPower()));
+        }
     }
     private void generateThunder(MainScene scene) {
         double angle = Math.random() * 2 * Math.PI;

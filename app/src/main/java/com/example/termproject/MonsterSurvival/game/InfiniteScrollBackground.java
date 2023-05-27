@@ -7,7 +7,6 @@ import com.example.termproject.MonsterSurvival.framework.util.Metrics;
 import com.example.termproject.MonsterSurvival.framework.objects.Sprite;
 
 public class InfiniteScrollBackground extends Sprite {
-    private static final float SPEED = 10.0f;
     private float speedX;
     private float speedY;
     private final float height;
@@ -22,8 +21,8 @@ public class InfiniteScrollBackground extends Sprite {
         this.speedX = 0; this.speedY = 0;
     }
 
-    public void setSpeedX(float speed) {speedX = -speed * SPEED;}
-    public void setSpeedY(float speed) {speedY = -speed * SPEED;}
+    public void setSpeedX(float speed, float playerSpeed) {speedX = -speed * playerSpeed;}
+    public void setSpeedY(float speed, float playerSpeed) {speedY = -speed * playerSpeed;}
 
     @Override
     public void update() {

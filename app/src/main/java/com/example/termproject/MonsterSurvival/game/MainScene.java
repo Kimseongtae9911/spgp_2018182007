@@ -56,6 +56,11 @@ public class MainScene extends BaseScene {
         joyStick.setJoystickListener(new JoyStick.JoystickListener() {
             @Override
             public void onJoystickMoved(float xPercent, float yPercent) {
+                float magnitude = (float)Math.sqrt(xPercent * xPercent + yPercent * yPercent);
+                if(magnitude != 0) {
+                    xPercent = xPercent / magnitude;
+                    yPercent = yPercent / magnitude;
+                }
                 hero.setDir(xPercent, yPercent);
             }
         });
@@ -152,8 +157,8 @@ public class MainScene extends BaseScene {
         if(nextRound)
             return;
         super.update(elapsedNanos);
-        background.setSpeedX(hero.getMoveX());
-        background.setSpeedY(hero.getMoveY());
+        background.setSpeedX(hero.getMoveX(), hero.getSpeed());
+        background.setSpeedY(hero.getMoveY(), hero.getSpeed());
 
         if((int)timer.getTime() % 180 == 0 && (int)timer.getTime() != 0) {
             nextRound = true;
