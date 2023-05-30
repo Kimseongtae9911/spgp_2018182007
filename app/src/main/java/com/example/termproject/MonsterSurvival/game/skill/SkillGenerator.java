@@ -16,11 +16,13 @@ public class SkillGenerator implements IGameObject {
 
     @Override
     public void update() {
+        MainScene scene = (MainScene) BaseScene.getTopScene();
+        float coolTime = (100 - scene.getPlayer().getCoolTime()) * 0.01f;
         for(int i = 0; i < times.length; ++i) {
             times[i] += BaseScene.frameTime;
-            if (times[i] > SKILL_GEN_INTERVAL[i]) {
+            if (times[i] > SKILL_GEN_INTERVAL[i] * coolTime) {
                 generate(i);
-                times[i] -= SKILL_GEN_INTERVAL[i];
+                times[i] = 0.f;
             }
         }
 

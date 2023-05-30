@@ -27,7 +27,7 @@ public class Monster extends AnimSprite implements IRecyclable, IBoxCollidable {
 
     private int level;
     protected int hp, maxHp;
-    protected int power = 5;
+    protected int power = 10;
 
     private float dx =0;
     private float dy =0;

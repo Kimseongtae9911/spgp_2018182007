@@ -12,6 +12,7 @@ import com.example.termproject.MonsterSurvival.framework.objects.Gauge;
 import com.example.termproject.MonsterSurvival.framework.interfaces.IBoxCollidable;
 import com.example.termproject.MonsterSurvival.framework.util.Metrics;
 import com.example.termproject.MonsterSurvival.framework.util.OrientedBoundingBox;
+import com.example.termproject.MonsterSurvival.game.scene.MainScene;
 import com.example.termproject.R;
 
 public class Hero extends AnimSprite implements IBoxCollidable {
@@ -42,8 +43,8 @@ public class Hero extends AnimSprite implements IBoxCollidable {
     private int maxExp = 100;
     private int curExp = 0;
     private int power = 10;
-    private float defense = 0;
-    private float cooltime = 0;
+    private int defense = 0;
+    private int cooltime = 0;
     private boolean animSide = false;
     //Player Stats
     private float dx = 0;
@@ -94,7 +95,7 @@ public class Hero extends AnimSprite implements IBoxCollidable {
         curExp = 0;
         power = 10;
         speed = 5.0f;
-        defense = 10;
+        defense = 0;
         cooltime = 0;
         dx = 0;
         dy = 0;
@@ -112,7 +113,12 @@ public class Hero extends AnimSprite implements IBoxCollidable {
     public float getX() {return x;}
     public float getY() {return y;}
 
-    public void decreaseHp(float power) {curHp -= power;}
+    public void decreaseHp(int power) {
+        int damage = power - defense;
+        if(damage <= 0)
+            return;
+        curHp -= damage;
+    }
     @Override
     public void update() {
         super.update();
@@ -221,7 +227,26 @@ public class Hero extends AnimSprite implements IBoxCollidable {
         if(curExp >= maxExp) {
             curExp -= maxExp;
             maxExp = (int)(maxExp * 1.2f);
+            maxHp = (int)(maxHp * 1.4f);
             curHp = maxHp;
+            StatGenerator.generateStatButtons();
+            ((MainScene)BaseScene.getTopScene()).setLevelUp(true);
         }
     }
+
+    public void addPower(int power) {
+        this.power += power;
+    }
+    public void addDefense(int defense) {
+        this.defense += defense;
+    }
+    public void addSpeed(float speed) {
+        this.speed += speed;
+    }
+    public void addCoolTime(int cooltime) {
+        if(this.cooltime >= 70)
+            return;
+        this.cooltime += cooltime;
+    }
+    public int getCoolTime() {return cooltime;}
 }

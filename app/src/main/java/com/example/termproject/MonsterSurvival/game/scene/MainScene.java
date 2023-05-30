@@ -30,8 +30,10 @@ public class MainScene extends BaseScene {
     private static final String TAG = MainScene.class.getSimpleName();
     private ArrayList<IGameObject> pauseObject = new ArrayList<>();
     private ArrayList<IGameObject> nextRoundObject = new ArrayList<>();
+    private ArrayList<IGameObject> levelUpObject = new ArrayList<>();
     private boolean nextRound = false;
     private boolean pause = false;
+    private boolean levelUp = false;
     private final Hero hero = new Hero();
     private final InfiniteScrollBackground background;
     private Timer timer = new Timer();
@@ -140,6 +142,15 @@ public class MainScene extends BaseScene {
                 if (processed) return true;
             }
         }
+        else if(levelUp) {
+            for (IGameObject obj : levelUpObject) {
+                if (!(obj instanceof ITouchable)) {
+                    continue;
+                }
+                boolean processed = ((ITouchable) obj).onTouchEvent(event);
+                if (processed) return true;
+            }
+        }
         else {
             ArrayList<IGameObject> objects = layers.get(Layer.touch.ordinal());
             for (IGameObject obj : objects) {
@@ -160,6 +171,9 @@ public class MainScene extends BaseScene {
             return;
         if(nextRound)
             return;
+        if(levelUp)
+            return;
+
         super.update(elapsedNanos);
         background.setSpeedX(hero.getMoveX(), hero.getSpeed());
         background.setSpeedY(hero.getMoveY(), hero.getSpeed());
@@ -186,12 +200,23 @@ public class MainScene extends BaseScene {
                 obj.draw(canvas);
             }
         }
+
+        if(levelUp) {
+            canvas.drawRect(0.f, 0.f, Metrics.game_width, Metrics.game_height, transparentPaint);
+            for(IGameObject obj : levelUpObject) {
+                if(obj == null)
+                    continue;
+                obj.draw(canvas);
+            }
+        }
     }
 
     public void addPauseObject(IGameObject obj) {
         pauseObject.add(obj);
     }
     public void addNextRoundObject(IGameObject obj) {nextRoundObject.add(obj);}
+    public void addLevelUpObject(IGameObject obj) {levelUpObject.add(obj);}
+    public void clearLevelUpObject() {levelUpObject.clear();}
     public void addScore(int num) {score.addScore(num);}
     public GameView getView() {return view;}
     public float getPlayerX() {return hero.getX();}
@@ -202,4 +227,6 @@ public class MainScene extends BaseScene {
     public float getPlayerSpeed() {return hero.getSpeed();}
     public int getPlayerPower() {return hero.getPower();}
     public Hero getPlayer() {return hero;}
+    public Coin getCoin() {return coin;}
+    public void setLevelUp(boolean levelUp) {this.levelUp = levelUp;}
 }

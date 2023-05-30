@@ -18,8 +18,10 @@ import com.example.termproject.MonsterSurvival.game.skill.SkillFlyFire;
 import com.example.termproject.MonsterSurvival.game.skill.SkillMissile;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class CollisionChecker implements IGameObject {
+    private Random randomCoin = new Random();
     Animation shakeAnimation = new TranslateAnimation(0, 10, 0, 0);
     private static final String TAG = CollisionChecker.class.getSimpleName();
     private static final int SHAKE_DURATION = 500;
@@ -148,6 +150,8 @@ public class CollisionChecker implements IGameObject {
                         scene.remove(monster);
                         scene.getPlayer().GainExp(monster.getLevel() * 10);
                         scene.addScore(monster.getScore());
+
+                        scene.getCoin().addCoin(randomCoin.nextInt(monster.getLevel() + 2));
                     }
                 }
             }
