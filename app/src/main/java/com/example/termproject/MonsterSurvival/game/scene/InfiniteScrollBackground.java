@@ -1,4 +1,4 @@
-package com.example.termproject.MonsterSurvival.game;
+package com.example.termproject.MonsterSurvival.game.scene;
 
 import android.graphics.Canvas;
 

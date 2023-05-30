@@ -4,16 +4,15 @@ import android.graphics.Canvas;
 
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
 import com.example.termproject.MonsterSurvival.framework.interfaces.IGameObject;
-import com.example.termproject.MonsterSurvival.game.MainScene;
+import com.example.termproject.MonsterSurvival.game.scene.MainScene;
 import com.example.termproject.MonsterSurvival.game.monster.Monster;
 
 import java.util.ArrayList;
 
 public class SkillGenerator implements IGameObject {
-    private float[] SKILL_GEN_INTERVAL = {3.0f, 5.0f, 3.0f, 9.0f, 9.0f, 20.0f};
+    private float[] SKILL_GEN_INTERVAL = {3.0f, 5.0f, 9.0f, 15.0f, 9.0f, 20.0f};
     private static final String TAG = Monster.class.getSimpleName();
     private float[] times = {0.f, 0.f, 0.f, 0.f, 0.f, 0.f};
-    private float difficultyTime = 0;
 
     @Override
     public void update() {
@@ -24,7 +23,6 @@ public class SkillGenerator implements IGameObject {
                 times[i] -= SKILL_GEN_INTERVAL[i];
             }
         }
-        difficultyTime += BaseScene.frameTime;
 
         if(((MainScene)BaseScene.getTopScene()).getPlayer().getBarrier()) {
             times[5] -= BaseScene.frameTime;

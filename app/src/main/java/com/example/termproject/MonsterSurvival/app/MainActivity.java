@@ -7,7 +7,7 @@ import android.os.Bundle;
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
 import com.example.termproject.MonsterSurvival.framework.GameView;
 import com.example.termproject.MonsterSurvival.framework.util.Metrics;
-import com.example.termproject.MonsterSurvival.game.MainScene;
+import com.example.termproject.MonsterSurvival.game.scene.MainScene;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.termproject.MonsterSurvival.game;
+package com.example.termproject.MonsterSurvival.framework.util;
 
 import android.graphics.Canvas;
 import android.view.animation.Animation;
@@ -8,9 +8,9 @@ import android.view.animation.TranslateAnimation;
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
 import com.example.termproject.MonsterSurvival.framework.interfaces.IBoxCollidable;
 import com.example.termproject.MonsterSurvival.framework.interfaces.IGameObject;
-import com.example.termproject.MonsterSurvival.framework.util.OrientedBoundingBox;
-import com.example.termproject.MonsterSurvival.framework.util.Vector2;
+import com.example.termproject.MonsterSurvival.game.scene.MainScene;
 import com.example.termproject.MonsterSurvival.game.monster.Monster;
+import com.example.termproject.MonsterSurvival.game.player.Hero;
 import com.example.termproject.MonsterSurvival.game.skill.Skill;
 import com.example.termproject.MonsterSurvival.game.skill.SkillCircle;
 import com.example.termproject.MonsterSurvival.game.skill.SkillFireBall;

@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
 import com.example.termproject.MonsterSurvival.framework.interfaces.IGameObject;
-import com.example.termproject.MonsterSurvival.game.MainScene;
+import com.example.termproject.MonsterSurvival.game.scene.MainScene;
 
 public class MonsterGenerator implements IGameObject {
     private static final float GEN_INTERVAL = 5.0f;
@@ -24,7 +24,7 @@ public class MonsterGenerator implements IGameObject {
 
     private void generate() {
         BaseScene scene = BaseScene.getTopScene();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < ((int)(difficultyTime / 30)+1) * 7; i++) {
             scene.add(MainScene.Layer.monster, Monster.get(i, (int)(difficultyTime / 30)+1));
         }
     }

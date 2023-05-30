@@ -12,7 +12,7 @@ import com.example.termproject.MonsterSurvival.framework.interfaces.IRecyclable;
 import com.example.termproject.MonsterSurvival.framework.util.Metrics;
 import com.example.termproject.MonsterSurvival.framework.util.OrientedBoundingBox;
 import com.example.termproject.MonsterSurvival.framework.RecycleBin;
-import com.example.termproject.MonsterSurvival.game.MainScene;
+import com.example.termproject.MonsterSurvival.game.scene.MainScene;
 import com.example.termproject.R;
 
 import java.util.Random;

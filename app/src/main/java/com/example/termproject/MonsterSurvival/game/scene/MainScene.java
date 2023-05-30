@@ -1,4 +1,4 @@
-package com.example.termproject.MonsterSurvival.game;
+package com.example.termproject.MonsterSurvival.game.scene;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,8 +12,11 @@ import com.example.termproject.MonsterSurvival.framework.objects.Button;
 import com.example.termproject.MonsterSurvival.framework.GameView;
 import com.example.termproject.MonsterSurvival.framework.interfaces.IGameObject;
 import com.example.termproject.MonsterSurvival.framework.interfaces.ITouchable;
+import com.example.termproject.MonsterSurvival.framework.util.CollisionChecker;
 import com.example.termproject.MonsterSurvival.framework.util.Metrics;
 import com.example.termproject.MonsterSurvival.game.monster.MonsterGenerator;
+import com.example.termproject.MonsterSurvival.game.player.Hero;
+import com.example.termproject.MonsterSurvival.game.player.StatGenerator;
 import com.example.termproject.MonsterSurvival.game.skill.SkillGenerator;
 import com.example.termproject.MonsterSurvival.game.ui.Coin;
 import com.example.termproject.MonsterSurvival.game.ui.JoyStick;
@@ -115,6 +118,7 @@ public class MainScene extends BaseScene {
         add(Layer.controller, new MonsterGenerator());
         add(Layer.controller, new CollisionChecker());
         add(Layer.controller, new SkillGenerator());
+        add(Layer.controller, new StatGenerator());
     }
 
     public boolean onTouchEvent(MotionEvent event) {

@@ -8,7 +8,7 @@ import com.example.termproject.MonsterSurvival.framework.RecycleBin;
 import com.example.termproject.MonsterSurvival.framework.interfaces.IBoxCollidable;
 import com.example.termproject.MonsterSurvival.framework.interfaces.IRecyclable;
 import com.example.termproject.MonsterSurvival.framework.util.Metrics;
-import com.example.termproject.MonsterSurvival.game.MainScene;
+import com.example.termproject.MonsterSurvival.game.scene.MainScene;
 import com.example.termproject.R;
 
 public class SkillBarrier extends Skill implements IBoxCollidable, IRecyclable {

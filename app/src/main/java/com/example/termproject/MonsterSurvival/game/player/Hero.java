@@ -1,4 +1,4 @@
-package com.example.termproject.MonsterSurvival.game;
+package com.example.termproject.MonsterSurvival.game.player;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -42,7 +42,7 @@ public class Hero extends AnimSprite implements IBoxCollidable {
     private int maxExp = 100;
     private int curExp = 0;
     private int power = 10;
-    private float defense = 10;
+    private float defense = 0;
     private float cooltime = 0;
     private boolean animSide = false;
     //Player Stats
@@ -221,6 +221,7 @@ public class Hero extends AnimSprite implements IBoxCollidable {
         if(curExp >= maxExp) {
             curExp -= maxExp;
             maxExp = (int)(maxExp * 1.2f);
+            curHp = maxHp;
         }
     }
 }
