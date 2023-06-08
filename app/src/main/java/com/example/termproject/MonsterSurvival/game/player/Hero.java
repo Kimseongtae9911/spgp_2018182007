@@ -118,6 +118,10 @@ public class Hero extends AnimSprite implements IBoxCollidable {
         if(damage <= 0)
             return;
         curHp -= damage;
+
+        if(curHp <= 0) {
+            ((MainScene)BaseScene.getTopScene()).setGameOver(true);
+        }
     }
     @Override
     public void update() {

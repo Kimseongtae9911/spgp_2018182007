@@ -4,14 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.MotionEvent;
 
+import com.example.termproject.MonsterSurvival.app.MainActivity;
 import com.example.termproject.MonsterSurvival.app.TitleActivity;
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
 import com.example.termproject.MonsterSurvival.framework.objects.Button;
 import com.example.termproject.MonsterSurvival.framework.GameView;
 import com.example.termproject.MonsterSurvival.framework.interfaces.IGameObject;
 import com.example.termproject.MonsterSurvival.framework.interfaces.ITouchable;
+import com.example.termproject.MonsterSurvival.framework.objects.Sprite;
 import com.example.termproject.MonsterSurvival.framework.util.CollisionChecker;
 import com.example.termproject.MonsterSurvival.framework.util.Metrics;
 import com.example.termproject.MonsterSurvival.game.monster.MonsterGenerator;
@@ -28,12 +32,16 @@ import java.util.ArrayList;
 
 public class MainScene extends BaseScene {
     private static final String TAG = MainScene.class.getSimpleName();
+    private final Paint backgroundPaint = new Paint();
+    private final Paint gameOverPaint = new Paint();
     private ArrayList<IGameObject> pauseObject = new ArrayList<>();
     private ArrayList<IGameObject> nextRoundObject = new ArrayList<>();
     private ArrayList<IGameObject> levelUpObject = new ArrayList<>();
+    private ArrayList<IGameObject> gameOverObject = new ArrayList<>();
     private boolean nextRound = false;
     private boolean pause = false;
     private boolean levelUp = false;
+    private boolean gameOver = false;
     private final Hero hero = new Hero();
     private final InfiniteScrollBackground background;
     private Timer timer = new Timer();
@@ -53,6 +61,12 @@ public class MainScene extends BaseScene {
         transparentPaint.setColor(Color.GRAY);
         transparentPaint.setAlpha(128);
 
+        backgroundPaint.setColor(Color.BLACK);
+
+        gameOverPaint.setColor(Color.RED);
+        gameOverPaint.setTextSize(1.0f);
+        gameOverPaint.setLetterSpacing(-0.2f);
+
         add(Layer.player, hero);
         background = new InfiniteScrollBackground(R.mipmap.background);
         add(Layer.bg1, background);
@@ -69,6 +83,24 @@ public class MainScene extends BaseScene {
                 hero.setDir(xPercent, yPercent);
             }
         });
+
+        addGameOverObject(new Sprite(R.mipmap.game_over, Metrics.game_width / 2, 1.0f, 6.5f, 2.76f));
+        addGameOverObject(new Button(R.mipmap.lobby_btn, Metrics.game_width / 2 + 2.0f, Metrics.game_height / 2, 3.78f, 6.36f, new Button.Callback() {
+            @Override
+            public boolean onTouch(Button.Action action) {
+                gameOver = false;
+                context.startActivity(new Intent(context, TitleActivity.class));
+                return true;
+            }
+        }));
+        addGameOverObject(new Button(R.mipmap.restart_btn, Metrics.game_width / 2- 2.0f, Metrics.game_height / 2, 3.78f, 6.36f, new Button.Callback() {
+            @Override
+            public boolean onTouch(Button.Action action) {
+                gameOver = false;
+                context.startActivity(new Intent(context, MainActivity.class));
+                return true;
+            }
+        }));
 
         addNextRoundObject(new Button(R.mipmap.lobby_btn, Metrics.game_width / 2- 2.0f, Metrics.game_height / 2, 3.78f, 6.36f, new Button.Callback() {
             @Override
@@ -151,6 +183,15 @@ public class MainScene extends BaseScene {
                 if (processed) return true;
             }
         }
+        else if(gameOver) {
+            for (IGameObject obj : gameOverObject) {
+                if (!(obj instanceof ITouchable)) {
+                    continue;
+                }
+                boolean processed = ((ITouchable) obj).onTouchEvent(event);
+                if (processed) return true;
+            }
+        }
         else {
             ArrayList<IGameObject> objects = layers.get(Layer.touch.ordinal());
             for (IGameObject obj : objects) {
@@ -172,6 +213,8 @@ public class MainScene extends BaseScene {
         if(nextRound)
             return;
         if(levelUp)
+            return;
+        if(gameOver)
             return;
 
         super.update(elapsedNanos);
@@ -209,6 +252,27 @@ public class MainScene extends BaseScene {
                 obj.draw(canvas);
             }
         }
+
+        if(gameOver) {
+            canvas.drawRect(0.f, 0.f, Metrics.game_width, Metrics.game_height, transparentPaint);
+            for(IGameObject obj : gameOverObject) {
+                if(obj == null)
+                    continue;
+                obj.draw(canvas);
+            }
+        }
+
+        int screenWidth = canvas.getWidth();
+        int screenHeight = 16;
+        Rect backgroundRectLeft = new Rect(-4, -4, 0, screenHeight +4);
+        Rect backgroundRectRight = new Rect(screenWidth, -4, screenWidth + 4, screenHeight +4);
+        Rect backgroundRectUp = new Rect(-4, -4, screenWidth +4, 0);
+        Rect backgroundRectDown = new Rect(-4, screenHeight, screenWidth + 4, screenHeight + 4);
+
+        canvas.drawRect(backgroundRectLeft, backgroundPaint);
+        canvas.drawRect(backgroundRectRight, backgroundPaint);
+        canvas.drawRect(backgroundRectUp, backgroundPaint);
+        canvas.drawRect(backgroundRectDown, backgroundPaint);
     }
 
     public void addPauseObject(IGameObject obj) {
@@ -217,6 +281,7 @@ public class MainScene extends BaseScene {
     public void addNextRoundObject(IGameObject obj) {nextRoundObject.add(obj);}
     public void addLevelUpObject(IGameObject obj) {levelUpObject.add(obj);}
     public void clearLevelUpObject() {levelUpObject.clear();}
+    public void addGameOverObject(IGameObject obj) {gameOverObject.add(obj);}
     public void addScore(int num) {score.addScore(num);}
     public GameView getView() {return view;}
     public float getPlayerX() {return hero.getX();}
@@ -229,4 +294,5 @@ public class MainScene extends BaseScene {
     public Hero getPlayer() {return hero;}
     public Coin getCoin() {return coin;}
     public void setLevelUp(boolean levelUp) {this.levelUp = levelUp;}
+    public void setGameOver(boolean gameOver) {this.gameOver = gameOver;}
 }
