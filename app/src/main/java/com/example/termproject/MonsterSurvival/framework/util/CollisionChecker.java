@@ -6,6 +6,7 @@ import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
 
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
+import com.example.termproject.MonsterSurvival.framework.Sound;
 import com.example.termproject.MonsterSurvival.framework.interfaces.IBoxCollidable;
 import com.example.termproject.MonsterSurvival.framework.interfaces.IGameObject;
 import com.example.termproject.MonsterSurvival.game.scene.MainScene;
@@ -16,6 +17,7 @@ import com.example.termproject.MonsterSurvival.game.skill.SkillCircle;
 import com.example.termproject.MonsterSurvival.game.skill.SkillFireBall;
 import com.example.termproject.MonsterSurvival.game.skill.SkillFlyFire;
 import com.example.termproject.MonsterSurvival.game.skill.SkillMissile;
+import com.example.termproject.R;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -104,8 +106,10 @@ public class CollisionChecker implements IGameObject {
                     player.invincible = true;
                     if (player.getBarrier()) {
                         player.setBarrier(false);
+                        Sound.playEffect(R.raw.barrier, 4.0f);
                         break;
                     }
+                    Sound.playEffect(R.raw.playerhit, 2.0f);
                     player.decreaseHp(monster.getPower());
                     if (!(shakeAnimation.hasStarted() && !shakeAnimation.hasEnded()))
                         scene.getView().startAnimation(shakeAnimation);
@@ -151,6 +155,7 @@ public class CollisionChecker implements IGameObject {
                         scene.getPlayer().GainExp(monster.getLevel() * 10);
                         scene.addScore(monster.getScore());
 
+                        Sound.playEffect(R.raw.monsterdie, 1.0f);
                         scene.getCoin().addCoin(randomCoin.nextInt(monster.getLevel() + 2));
                     }
                 }

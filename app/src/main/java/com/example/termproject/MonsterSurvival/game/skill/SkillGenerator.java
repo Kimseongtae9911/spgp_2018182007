@@ -3,9 +3,11 @@ package com.example.termproject.MonsterSurvival.game.skill;
 import android.graphics.Canvas;
 
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
+import com.example.termproject.MonsterSurvival.framework.Sound;
 import com.example.termproject.MonsterSurvival.framework.interfaces.IGameObject;
 import com.example.termproject.MonsterSurvival.game.scene.MainScene;
 import com.example.termproject.MonsterSurvival.game.monster.Monster;
+import com.example.termproject.R;
 
 import java.util.ArrayList;
 
@@ -36,18 +38,23 @@ public class SkillGenerator implements IGameObject {
         switch(num) {
             case 0:
                 generateMissile(scene);
+                Sound.playEffect(R.raw.missile, 1.0f);
                 break;
             case 1:
                 generateFireBall(scene);
+                Sound.playEffect(R.raw.fireball, 1.5f);
                 break;
             case 2:
                 generateCircle(scene);
+                Sound.playEffect(R.raw.circle, 3.0f);
                 break;
             case 3:
                 generateFlyFire(scene);
+                Sound.playEffect(R.raw.flyfire, 4.0f);
                 break;
             case 4:
                 generateThunder(scene);
+                Sound.playEffect(R.raw.thunder, 1.0f);
                 break;
             case 5:
                 generateBarrier(scene);

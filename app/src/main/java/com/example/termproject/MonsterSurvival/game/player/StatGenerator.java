@@ -3,6 +3,7 @@ package com.example.termproject.MonsterSurvival.game.player;
 import android.graphics.Canvas;
 
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
+import com.example.termproject.MonsterSurvival.framework.Sound;
 import com.example.termproject.MonsterSurvival.framework.interfaces.IGameObject;
 import com.example.termproject.MonsterSurvival.framework.objects.Button;
 import com.example.termproject.MonsterSurvival.framework.util.Metrics;
@@ -34,6 +35,7 @@ public class StatGenerator implements IGameObject {
                             scene.setLevelUp(false);
                             scene.getPlayer().addPower(7);
                             scene.clearLevelUpObject();
+                            Sound.playEffect(R.raw.stat, 2.0f);
                             return true;
                         }
                     }));
@@ -45,6 +47,7 @@ public class StatGenerator implements IGameObject {
                             scene.setLevelUp(false);
                             scene.getPlayer().addSpeed(0.5f);
                             scene.clearLevelUpObject();
+                            Sound.playEffect(R.raw.stat, 2.0f);
                             return true;
                         }
                     }));
@@ -56,6 +59,7 @@ public class StatGenerator implements IGameObject {
                             scene.setLevelUp(false);
                             scene.getPlayer().addDefense(3);
                             scene.clearLevelUpObject();
+                            Sound.playEffect(R.raw.stat, 2.0f);
                             return true;
                         }
                     }));
@@ -67,6 +71,7 @@ public class StatGenerator implements IGameObject {
                             scene.setLevelUp(false);
                             scene.getPlayer().addCoolTime(3);
                             scene.clearLevelUpObject();
+                            Sound.playEffect(R.raw.stat, 2.0f);
                             return true;
                         }
                     }));

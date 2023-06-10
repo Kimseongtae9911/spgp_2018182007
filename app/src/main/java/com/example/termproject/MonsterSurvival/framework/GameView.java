@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.example.termproject.MonsterSurvival.BuildConfig;
 import com.example.termproject.MonsterSurvival.framework.util.Metrics;
+import com.example.termproject.R;
 
 /**
  * TODO: document your custom view class.
@@ -19,7 +20,7 @@ import com.example.termproject.MonsterSurvival.framework.util.Metrics;
 public class GameView extends View implements Choreographer.FrameCallback {
     private static final String TAG = GameView.class.getSimpleName();
     public static Resources res;
-    //    private Ball ball1, ball2;
+    public static GameView view;
     protected Paint fpsPaint;
     protected Paint borderPaint;
 
@@ -43,8 +44,9 @@ public class GameView extends View implements Choreographer.FrameCallback {
     }
 
     private void init(AttributeSet attrs, int defStyle) {
+        GameView.view = this;
         GameView.res = getResources();
-
+        Sound.playMusic(R.raw.bgm);
         running = true;
         Choreographer.getInstance().postFrameCallback(this);
 
