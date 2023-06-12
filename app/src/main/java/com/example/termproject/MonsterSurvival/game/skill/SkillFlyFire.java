@@ -12,7 +12,7 @@ import com.example.termproject.MonsterSurvival.game.scene.MainScene;
 import com.example.termproject.R;
 
 public class SkillFlyFire extends Skill implements IBoxCollidable, IRecyclable {
-    static final float FLYFIRE_WIDTH = 0.77f; //25.5
+    static final float FLYFIRE_WIDTH = 0.79f; //25.5
     static final float FLYFIRE_HEIGHT = 1.f; //33
     static final float FALL_SPEED = 20.f;
     public boolean collision = true;
@@ -22,7 +22,7 @@ public class SkillFlyFire extends Skill implements IBoxCollidable, IRecyclable {
     private float targetY = 0.f;
     private boolean fall = true;
     public SkillFlyFire(float x, float y, int power) {
-        super(R.mipmap.skill4, Metrics.game_width /2, Metrics.game_height / 2, FLYFIRE_WIDTH, FLYFIRE_HEIGHT, 1, 10, 8);
+        super(R.mipmap.skill4, Metrics.game_width / 2, Metrics.game_height / 2, FLYFIRE_WIDTH, FLYFIRE_HEIGHT, 1, 10, 8);
         imageSize = bitmap.getWidth() / 8;
         init(x, y, power);
         makeSourceRects();

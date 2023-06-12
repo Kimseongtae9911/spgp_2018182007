@@ -26,25 +26,10 @@ public class TitleActivity extends AppCompatActivity {
         Metrics.reset();
         binding = ActivityTitleBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        createAnimator();
         mediaPlayer = MediaPlayer.create(this, R.raw.titlebgm);
         mediaPlayer.start();
     }
 
-    private void createAnimator() {
-        animator = ValueAnimator.ofFloat(0.0f, 0.5f);
-        animator.setDuration(30000);
-        animator.setRepeatCount(ValueAnimator.INFINITE);
-        animator.setInterpolator(new LinearInterpolator());
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                float progress = (Float)valueAnimator.getAnimatedValue();
-                float tx = -1 * binding.backgroundImageView.getWidth() * progress;
-                binding.backgroundImageView.setTranslationX(tx);
-            }
-        });
-    }
 
     public void onBtnStart(View view) {
         mediaPlayer.stop();

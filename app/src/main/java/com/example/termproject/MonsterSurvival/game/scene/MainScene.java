@@ -264,7 +264,7 @@ public class MainScene extends BaseScene {
         background.setSpeedX(hero.getMoveX(), hero.getSpeed());
         background.setSpeedY(hero.getMoveY(), hero.getSpeed());
 
-        if((int)timer.getTime() % 10 == 0 && (int)timer.getTime() != 0) {
+        if((int)timer.getTime() % 100 == 0 && (int)timer.getTime() != 0) {
             nextRound = true;
         }
     }
