@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:text="랭킹"
                 android:layout_weight="1"
-                android:onClick="onBtnStart"
+                android:onClick="onRankStart"
                 />
             <Button
                 android:layout_width="0dp"
@@ -68,6 +68,7 @@
                 android:layout_height="wrap_content"
                 android:text="강화"
                 android:layout_weight="1"
+                android:onClick="onPowerStart"
                 />
 
         </LinearLayout>

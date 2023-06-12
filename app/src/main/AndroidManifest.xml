@@ -16,8 +16,15 @@
             android:name=".MonsterSurvival.app.MainActivity"
             android:exported="false" />
         <activity
+            android:name=".MonsterSurvival.app.RankingActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".MonsterSurvival.app.PowerActivity"
+            android:exported="false"/>
+        <activity
             android:name=".MonsterSurvival.app.TitleActivity"
-            android:exported="true">
+            android:exported="true" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -52,4 +52,16 @@ public class TitleActivity extends AppCompatActivity {
         startActivity(new Intent(this, MainActivity.class));
 
     }
+
+    public void onRankStart(View view) {
+        mediaPlayer.stop();
+        mediaPlayer.release();
+        startActivity(new Intent(this, RankingActivity.class));
+    }
+
+    public void onPowerStart(View view) {
+        mediaPlayer.stop();
+        mediaPlayer.release();
+        startActivity(new Intent(this, PowerActivity.class));
+    }
 }

@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import com.example.termproject.MonsterSurvival.app.MainActivity;
 import com.example.termproject.MonsterSurvival.app.TitleActivity;
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
+import com.example.termproject.MonsterSurvival.framework.Sound;
 import com.example.termproject.MonsterSurvival.framework.objects.Button;
 import com.example.termproject.MonsterSurvival.framework.GameView;
 import com.example.termproject.MonsterSurvival.framework.interfaces.IGameObject;
@@ -58,6 +59,8 @@ public class MainScene extends BaseScene {
         initLayers(Layer.COUNT);
         this.view = view;
         hero.reset();
+        Sound.playMusic(R.raw.bgm);
+
         transparentPaint.setColor(Color.GRAY);
         transparentPaint.setAlpha(128);
 
