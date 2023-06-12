@@ -17,6 +17,7 @@ import com.example.termproject.MonsterSurvival.game.skill.SkillCircle;
 import com.example.termproject.MonsterSurvival.game.skill.SkillFireBall;
 import com.example.termproject.MonsterSurvival.game.skill.SkillFlyFire;
 import com.example.termproject.MonsterSurvival.game.skill.SkillMissile;
+import com.example.termproject.MonsterSurvival.game.skill.SkillThunder;
 import com.example.termproject.R;
 
 import java.util.ArrayList;
@@ -148,6 +149,13 @@ public class CollisionChecker implements IGameObject {
                             break;
                         }
                         flyFire.collision = false;
+                    }
+                    else if(skill instanceof SkillThunder) {
+                        SkillThunder thunder = (SkillThunder) skill;
+                        if(!thunder.collision) {
+                            break;
+                        }
+                        thunder.collision = false;
                     }
                     boolean remove = monster.decreaseLife(skill.getPower());
                     if(remove) {

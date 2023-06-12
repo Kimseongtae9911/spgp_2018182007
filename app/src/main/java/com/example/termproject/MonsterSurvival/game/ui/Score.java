@@ -5,8 +5,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 
+import com.example.termproject.MonsterSurvival.framework.BaseScene;
 import com.example.termproject.MonsterSurvival.framework.util.Metrics;
 import com.example.termproject.MonsterSurvival.framework.objects.Sprite;
+import com.example.termproject.MonsterSurvival.game.scene.MainScene;
 import com.example.termproject.R;
 
 public class Score extends Sprite {
@@ -25,12 +27,13 @@ public class Score extends Sprite {
     public void addScore(int score) {
         this.score += score;
     }
-
+    public int getScore() {return score;}
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+        MainScene scene = (MainScene) BaseScene.getTopScene();
 
-        String str = String.valueOf(score);
+        String str = String.valueOf(score + (int)(scene.getTimer().getTime()) * 10);
         float textWidth = textPaint.measureText(str);
         float textX = (Metrics.game_width - textWidth) / 2;
         canvas.drawText(str, textX, 13.5f, textPaint);

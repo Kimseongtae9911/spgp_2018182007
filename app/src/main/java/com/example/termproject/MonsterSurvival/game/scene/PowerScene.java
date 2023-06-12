@@ -59,10 +59,10 @@ public class PowerScene extends BaseScene {
             @Override
             public boolean onTouch(Button.Action action) {
                 if(action == Button.Action.pressed) {
-                    if(coin < levels[0] * COIN_PER_LEVEL)
+                    if(coin < levels[0]* levels[0] * COIN_PER_LEVEL)
                         return true;
 
-                    coin -= levels[0] * COIN_PER_LEVEL;
+                    coin -= levels[0] * levels[0]* COIN_PER_LEVEL;
                     mediaPlayer.start();
                     if (levels[0] <= 4)
                         levels[0] += 1;
@@ -75,10 +75,10 @@ public class PowerScene extends BaseScene {
             @Override
             public boolean onTouch(Button.Action action) {
                 if(action == Button.Action.pressed) {
-                    if(coin < levels[1] * COIN_PER_LEVEL)
+                    if(coin < levels[1] * levels[1] * COIN_PER_LEVEL)
                         return true;
 
-                    coin -= levels[1] * COIN_PER_LEVEL;
+                    coin -= levels[1]* levels[1] * COIN_PER_LEVEL;
                     mediaPlayer.start();
                     if (levels[1] <= 4)
                         levels[1] += 1;
@@ -91,10 +91,10 @@ public class PowerScene extends BaseScene {
             @Override
             public boolean onTouch(Button.Action action) {
                 if(action == Button.Action.pressed) {
-                    if(coin < levels[2] * COIN_PER_LEVEL)
+                    if(coin < levels[2] * levels[2]* COIN_PER_LEVEL)
                         return true;
 
-                    coin -= levels[2] * COIN_PER_LEVEL;
+                    coin -= levels[2] * levels[2]* COIN_PER_LEVEL;
 
                     mediaPlayer.start();
                     if (levels[2] <= 4)
@@ -108,10 +108,10 @@ public class PowerScene extends BaseScene {
             @Override
             public boolean onTouch(Button.Action action) {
                 if(action == Button.Action.pressed) {
-                    if(coin < levels[3] * COIN_PER_LEVEL)
+                    if(coin < levels[3] * levels[3] * COIN_PER_LEVEL)
                         return true;
 
-                    coin -= levels[3] * COIN_PER_LEVEL;
+                    coin -= levels[3]* levels[3] * COIN_PER_LEVEL;
                     mediaPlayer.start();
                     if (levels[3] <= 4)
                         levels[3] += 1;
@@ -162,6 +162,12 @@ public class PowerScene extends BaseScene {
     private void loadStatInfo(Context context) {
         try {
             String json = Data.loadJSON(context, "statInfo.json");
+            if(json == null) {
+                for(int i =0; i < 4; ++i) {
+                    levels[i] = 0;
+                }
+                return;
+            }
             JSONObject jsonObject = new JSONObject(json);
             for (int i = 0; i < 4; i++) {
                 levels[i] = jsonObject.getInt("level" + (i + 1));

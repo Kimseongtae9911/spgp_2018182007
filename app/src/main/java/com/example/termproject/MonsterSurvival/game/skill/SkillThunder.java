@@ -16,6 +16,8 @@ public class SkillThunder extends Skill implements IBoxCollidable, IRecyclable {
     static final float THUNDER_HEIGHT = 0.5f;
     private float dx, dy;
     private float time = 0.f;
+    public boolean collision = true;
+    private float collisionTime = 0.f;
 
     public SkillThunder(float x, float y, float dx, float dy, int power) {
         super(R.mipmap.skill5, Metrics.game_width /2, Metrics.game_height / 2, THUNDER_WIDTH, THUNDER_HEIGHT, 1, 0, 1);
@@ -64,6 +66,14 @@ public class SkillThunder extends Skill implements IBoxCollidable, IRecyclable {
         if(time >= 0.5f) {
             scene.remove(this);
             active = false;
+        }
+
+        if(!collision) {
+            collisionTime += BaseScene.frameTime;
+            if (collisionTime >= 0.2f) {
+                collision = true;
+                collisionTime = 0.f;
+            }
         }
 
         fixDstRect();

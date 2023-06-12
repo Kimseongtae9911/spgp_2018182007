@@ -34,6 +34,7 @@ public class Coin extends Sprite {
     public void addCoin(int coin) {
         num += coin;
     }
+    public int getNum() {return num;}
 
     @Override
     public void update() {

@@ -67,7 +67,7 @@ public class SkillCircle extends Skill implements IBoxCollidable, IRecyclable {
 
         if(!collision) {
             collisionTime += BaseScene.frameTime;
-            if (collisionTime >= 0.2f) {
+            if (collisionTime >= 0.3f) {
                 collision = true;
                 collisionTime = 0.f;
             }

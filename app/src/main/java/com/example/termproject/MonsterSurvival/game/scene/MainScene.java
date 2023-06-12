@@ -1,12 +1,18 @@
 package com.example.termproject.MonsterSurvival.game.scene;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.text.InputType;
+import android.view.Gravity;
 import android.view.MotionEvent;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.example.termproject.MonsterSurvival.app.MainActivity;
 import com.example.termproject.MonsterSurvival.app.TitleActivity;
@@ -18,6 +24,7 @@ import com.example.termproject.MonsterSurvival.framework.interfaces.IGameObject;
 import com.example.termproject.MonsterSurvival.framework.interfaces.ITouchable;
 import com.example.termproject.MonsterSurvival.framework.objects.Sprite;
 import com.example.termproject.MonsterSurvival.framework.util.CollisionChecker;
+import com.example.termproject.MonsterSurvival.framework.util.Data;
 import com.example.termproject.MonsterSurvival.framework.util.Metrics;
 import com.example.termproject.MonsterSurvival.game.monster.MonsterGenerator;
 import com.example.termproject.MonsterSurvival.game.player.Hero;
@@ -29,7 +36,14 @@ import com.example.termproject.MonsterSurvival.game.ui.Score;
 import com.example.termproject.MonsterSurvival.game.ui.Timer;
 import com.example.termproject.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class MainScene extends BaseScene {
     private static final String TAG = MainScene.class.getSimpleName();
@@ -49,6 +63,8 @@ public class MainScene extends BaseScene {
     private JoyStick joyStick;
     private Coin coin = new Coin();
     private Score score = new Score();
+    private Context context;
+    private int prevCoin;
 
     GameView view;
     public enum Layer {
@@ -58,6 +74,7 @@ public class MainScene extends BaseScene {
     public MainScene(Context context, GameView view) {
         initLayers(Layer.COUNT);
         this.view = view;
+        this.context = context;
         hero.reset();
         Sound.playMusic(R.raw.bgm);
 
@@ -69,6 +86,17 @@ public class MainScene extends BaseScene {
         gameOverPaint.setColor(Color.RED);
         gameOverPaint.setTextSize(1.0f);
         gameOverPaint.setLetterSpacing(-0.2f);
+
+        try {
+            String json = Data.loadJSON(context, "statInfo.json");
+            JSONObject jsonObject = new JSONObject(json);
+            for (int i = 0; i < 4; i++) {
+                hero.setLevel(jsonObject.getInt("level" + (i + 1)), i);
+            }
+            prevCoin = jsonObject.getInt("coin");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         add(Layer.player, hero);
         background = new InfiniteScrollBackground(R.mipmap.background);
@@ -108,8 +136,20 @@ public class MainScene extends BaseScene {
         addNextRoundObject(new Button(R.mipmap.lobby_btn, Metrics.game_width / 2- 2.0f, Metrics.game_height / 2, 3.78f, 6.36f, new Button.Callback() {
             @Override
             public boolean onTouch(Button.Action action) {
-                nextRound = false;
-                context.startActivity(new Intent(context, TitleActivity.class));
+                try {
+                    JSONObject jsonObject = new JSONObject();
+                    for (int i = 0; i < 4; i++) {
+                        jsonObject.put("level" + (i + 1), hero.getLevel(i));
+                    }
+                    jsonObject.put("coin", coin.getNum() + prevCoin);
+
+                    Data.writeJSONToFile(context, "statInfo.json", jsonObject.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                showNameInputDialog(score.getScore() + (int) (timer.getTime()) * 10, context);
+
                 return true;
             }
         }));
@@ -224,7 +264,7 @@ public class MainScene extends BaseScene {
         background.setSpeedX(hero.getMoveX(), hero.getSpeed());
         background.setSpeedY(hero.getMoveY(), hero.getSpeed());
 
-        if((int)timer.getTime() % 180 == 0 && (int)timer.getTime() != 0) {
+        if((int)timer.getTime() % 10 == 0 && (int)timer.getTime() != 0) {
             nextRound = true;
         }
     }
@@ -278,6 +318,99 @@ public class MainScene extends BaseScene {
         canvas.drawRect(backgroundRectDown, backgroundPaint);
     }
 
+    private void showNameInputDialog(final int score, Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Enter your name");
+
+        final EditText input = new EditText(getContext());
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setGravity(Gravity.CENTER);
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(layoutParams);
+        builder.setView(input);
+
+        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String name = input.getText().toString().trim();
+                if (!name.isEmpty()) {
+                    saveScore(name, score);
+                }
+                nextRound = false;
+                context.startActivity(new Intent(context, TitleActivity.class));
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                nextRound = false;
+                context.startActivity(new Intent(context, TitleActivity.class));
+            }
+        });
+
+        builder.show();
+    }
+
+    private void saveScore(String name, int score) {
+        String json = Data.loadJSON(getContext(), "ranking.json");
+        List<JSONObject> rankingData = new ArrayList<>();
+
+        if (json != null) {
+            try {
+                JSONArray jsonArray = new JSONArray(json);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    rankingData.add(jsonObject);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Create a new ranking entry
+        JSONObject newEntry = new JSONObject();
+        try {
+            newEntry.put("name", name);
+            newEntry.put("score", score);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // Add the new entry to the ranking data
+        rankingData.add(newEntry);
+
+        // Sort the ranking data based on the score in descending order
+        Collections.sort(rankingData, new Comparator<JSONObject>() {
+            @Override
+            public int compare(JSONObject obj1, JSONObject obj2) {
+                try {
+                    int score1 = obj1.getInt("score");
+                    int score2 = obj2.getInt("score");
+                    return Integer.compare(score2, score1);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return 0;
+            }
+        });
+
+        if (rankingData.size() > 5) {
+            rankingData = rankingData.subList(0, 5);
+        }
+
+        JSONArray updatedArray = new JSONArray();
+        for (JSONObject entry : rankingData) {
+            updatedArray.put(entry);
+        }
+
+        Data.writeJSONToFile(getContext(), "ranking.json", updatedArray.toString());
+    }
+
     public void addPauseObject(IGameObject obj) {
         pauseObject.add(obj);
     }
@@ -287,6 +420,7 @@ public class MainScene extends BaseScene {
     public void addGameOverObject(IGameObject obj) {gameOverObject.add(obj);}
     public void addScore(int num) {score.addScore(num);}
     public GameView getView() {return view;}
+    public Context getContext() {return context;}
     public float getPlayerX() {return hero.getX();}
     public float getPlayerY() {return hero.getY();}
 
@@ -296,6 +430,7 @@ public class MainScene extends BaseScene {
     public int getPlayerPower() {return hero.getPower();}
     public Hero getPlayer() {return hero;}
     public Coin getCoin() {return coin;}
+    public Timer getTimer() {return timer;}
     public void setLevelUp(boolean levelUp) {this.levelUp = levelUp;}
     public void setGameOver(boolean gameOver) {this.gameOver = gameOver;}
 }

@@ -10,10 +10,14 @@ import com.example.termproject.MonsterSurvival.framework.objects.AnimSprite;
 import com.example.termproject.MonsterSurvival.framework.BaseScene;
 import com.example.termproject.MonsterSurvival.framework.objects.Gauge;
 import com.example.termproject.MonsterSurvival.framework.interfaces.IBoxCollidable;
+import com.example.termproject.MonsterSurvival.framework.util.Data;
 import com.example.termproject.MonsterSurvival.framework.util.Metrics;
 import com.example.termproject.MonsterSurvival.framework.util.OrientedBoundingBox;
 import com.example.termproject.MonsterSurvival.game.scene.MainScene;
 import com.example.termproject.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Hero extends AnimSprite implements IBoxCollidable {
 
@@ -52,6 +56,7 @@ public class Hero extends AnimSprite implements IBoxCollidable {
 
     private float moveX = 0;
     private float moveY = 0;
+    private int[] levels = {0, 0, 0, 0};
     private OrientedBoundingBox obb = new OrientedBoundingBox();
     public Hero() {
         super(R.mipmap.hero, Metrics.game_width /2, Metrics.game_height / 2, HERO_WIDTH, HERO_HEIGHT, 2, 10, 6);
@@ -67,6 +72,11 @@ public class Hero extends AnimSprite implements IBoxCollidable {
         expPaint.setColor(Color.GREEN);
         expPaint.setTextSize(TEXT_SIZE - 0.1f);
         expPaint.setTypeface(Typeface.DEFAULT_BOLD);
+
+        power += levels[0] * 5;
+        defense += levels[1] * 2;
+        speed += levels[2] * 0.1f;
+        cooltime += levels[3] * 2;
     }
 
     private void makeSourceRects() {
@@ -231,7 +241,7 @@ public class Hero extends AnimSprite implements IBoxCollidable {
         if(curExp >= maxExp) {
             curExp -= maxExp;
             maxExp = (int)(maxExp * 1.2f);
-            maxHp = (int)(maxHp * 1.4f);
+            maxHp = (int)(maxHp * 1.1f);
             curHp = maxHp;
             StatGenerator.generateStatButtons();
             ((MainScene)BaseScene.getTopScene()).setLevelUp(true);
@@ -253,4 +263,6 @@ public class Hero extends AnimSprite implements IBoxCollidable {
         this.cooltime += cooltime;
     }
     public int getCoolTime() {return cooltime;}
+    public int getLevel(int index) {return levels[index];}
+    public void setLevel(int level, int index) {levels[index] = level;}
 }

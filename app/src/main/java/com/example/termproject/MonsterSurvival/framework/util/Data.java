@@ -68,4 +68,11 @@ public class Data {
             file.delete();
         }
     }
+
+    public static void clearRanking(Context context) {
+        File file = new File(context.getFilesDir(), "ranking.json");
+        if (file.exists()) {
+            file.delete();
+        }
+    }
 }
