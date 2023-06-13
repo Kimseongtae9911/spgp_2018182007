@@ -227,3 +227,4 @@ High Concept : 재화를 이용하여 캐릭터를 강화하고, 강화한 캐�
 
 # 3차 발표 영상 링크
 
+https://youtu.be/S8m9kRLBHJM
